@@ -4,6 +4,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import Nav from './components/Nav';
+import SearchForm from './components/SearchForm';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
+        <SearchForm />
         <Nav />
 
         {children}
