@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import "./globals.css";
 import Nav from './components/Nav';
 import SearchForm from './components/SearchForm';
+import Footer from './components/Footer';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +27,8 @@ export default function RootLayout({ children }) {
         <Nav />
 
         {children}
+
+        <Footer />
 
         <script
           src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"
