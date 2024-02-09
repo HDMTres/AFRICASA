@@ -19,14 +19,16 @@ function PropertySingle({ params }) {
         fetch(`http://localhost:4000/properties/${id}`)
             .then(res => res.json())
             .then(data => setProperty(data))
-            .catch(err => err.message);
+            .catch(err => console.log(err.message));
     }
 
     const fetchAgent = () => {
-        fetch(`http://localhost:4000/agents/${property.agent}`)
-            .then(res => res.json())
-            .then(data => setAgent(data))
-            .catch(err => err.message);
+        if (property.agent) {
+            fetch(`http://localhost:4000/agents/${property.agent}`)
+                .then(res => res.json())
+                .then(data => setAgent(data))
+                .catch(err => console.log(err.message));
+        }
     }
 
     useEffect(() => {
@@ -208,7 +210,6 @@ function PropertySingle({ params }) {
                             <ul
                                 className='nav nav-pills-a nav-pills mb-3 section-t3'
                                 id="pills-tab"
-                                role="tablist"
                             >
                                 <li className='nav-item'>
                                     <a
@@ -216,8 +217,6 @@ function PropertySingle({ params }) {
                                         id="pills-video-tab"
                                         data-bs-toggle="pill"
                                         href="#pills-video"
-                                        role="tab"
-                                        aria-controls='pills-video'
                                         aria-selected="true"
                                     >
                                         Video
@@ -229,8 +228,6 @@ function PropertySingle({ params }) {
                                         id="pills-video-tab"
                                         data-bs-toggle="pill"
                                         href="#pills-plans"
-                                        role="tab"
-                                        aria-controls='pills-plans'
                                         aria-selected="false"
                                     >
                                         Floor Plans
@@ -242,8 +239,6 @@ function PropertySingle({ params }) {
                                         id="pills-map-tab"
                                         data-bs-toggle="pill"
                                         href="#pills-map"
-                                        role="tab"
-                                        aria-controls='pills-map'
                                         aria-selected="false"
                                     >
                                         Udication
@@ -254,23 +249,18 @@ function PropertySingle({ params }) {
                                 <div
                                     className='tab-pane fade show active'
                                     id="pills-video"
-                                    role="tabpanel"
                                     aria-labelledby='pills-video-tab'
                                 >
                                     <iframe
                                         src={property.video}
                                         width="100%"
                                         height="460"
-                                        frameBorder="0"
-                                        webkitAllowFullscreen
-                                        mozAllowFullScreen
                                         allowFullScreen
                                     ></iframe>
                                 </div>
                                 <div
                                     className='tab-pane fade'
                                     id="pills-plans"
-                                    role="tabpanel"
                                     aria-labelledby='pills-plans-tab'
                                 >
                                     <img src={property.floorPlans} className='img-fluid' />
@@ -278,7 +268,6 @@ function PropertySingle({ params }) {
                                 <div
                                     className='tab-pane fade'
                                     id="pills-map"
-                                    role="tabpanel"
                                     aria-labelledby='pills-map-tab'
                                 >
                                     <iframe
@@ -371,7 +360,7 @@ function PropertySingle({ params }) {
                                                 <div className='col-md-12 mb-1'>
                                                     <div className='form-group'>
                                                         <input
-                                                            type='email'
+                                                            type='text'
                                                             className='form-control form-control-lg form-control-a'
                                                             id="inputEmail"
                                                             placeholder='Email *'

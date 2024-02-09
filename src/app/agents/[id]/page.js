@@ -33,10 +33,7 @@ function AgentSingle({ params }) {
                             </div>
                         </div>
                         <div className='col-md-12 col-lg-4'>
-                            <nav
-                                aria-lable="breadcrumb"
-                                className='breadcrumb-box d-flex justify-content-lg-end'
-                            >
+                            <nav className='breadcrumb-box d-flex justify-content-lg-end'>
                                 <ol className='breadcrumb'>
                                     <li className='breadcrumb-item'>
                                         <Link href="/">

@@ -31,6 +31,7 @@ function SearchForm() {
                                     <label htmlFor="Type" className='pb-2'>Keyword</label>
                                     <input
                                         type="text"
+                                        name="keyword"
                                         className='form-control form-control-lg form-control-a'
                                         placeholder="Keyword"
                                     />
