@@ -13,9 +13,9 @@ function Hero() {
     const [slides, setSlides] = useState([]);
 
     const fetchData = () => {
-        fetch('http://localhost:4000/slides')
+        fetch('https://christmas-04.onrender.com/estateAgency/')
             .then(res => res.json())
-            .then(data => setSlides(data))
+            .then(data => setSlides(data[0]['slides']))
             .catch(err => console.log(err.message));
     }
 

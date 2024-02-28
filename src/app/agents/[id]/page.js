@@ -8,16 +8,17 @@ import Link from 'next/link';
 
 function AgentSingle({ params }) {
     const id = params.id;
-    const [agent, setAgent] = useState({});
+    const [agent, setAgent] = useState([]);
 
     const fetchData = () => {
-        fetch(`http://localhost:4000/agents/${id}`)
+        fetch(`https://christmas-04.onrender.com/estateAgency/`)
             .then(res => res.json())
-            .then(data => setAgent(data))
+            .then(data => setAgent(data[0]['agents'][id - 1]))
             .catch(err => console.log(err.message));
     }
 
     useEffect(() => {
+        console.log(agent);
         fetchData();
     }, []);
 

@@ -8,9 +8,9 @@ function AgentsList() {
     const [agents, setAgents] = useState([]);
 
     const fetchData = () => {
-        fetch('http://localhost:4000/agents')
+        fetch('https://christmas-04.onrender.com/estateAgency/')
             .then(res => res.json())
-            .then(data => setAgents(data))
+            .then(data => setAgents(data[0]['agents']))
             .catch(err => console.log(err.message));
     };
 

@@ -16,17 +16,17 @@ function PropertySingle({ params }) {
     const [agent, setAgent] = useState({});
 
     const fetchData = () => {
-        fetch(`http://localhost:4000/properties/${id}`)
+        fetch(`https://christmas-04.onrender.com/estateAgency/`)
             .then(res => res.json())
-            .then(data => setProperty(data))
+            .then(data => setProperty(data[0]['properties'][id - 1]))
             .catch(err => console.log(err.message));
     }
 
     const fetchAgent = () => {
         if (property.agent) {
-            fetch(`http://localhost:4000/agents/${property.agent}`)
+            fetch(`https://christmas-04.onrender.com/estateAgency/`)
                 .then(res => res.json())
-                .then(data => setAgent(data))
+                .then(data => setAgent(data[0]['agents'][property.agent - 1]))
                 .catch(err => console.log(err.message));
         }
     }

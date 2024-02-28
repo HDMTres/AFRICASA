@@ -11,9 +11,9 @@ function PropertyList() {
     const [properties, setProperties] = useState([]);
 
     const fetchData = () => {
-        fetch('http://localhost:4000/properties')
+        fetch('https://christmas-04.onrender.com/estateAgency/')
             .then(res => res.json())
-            .then(data => setProperties(data))
+            .then(data => setProperties(data[0]['properties']))
             .catch(err => console.log(err.message));
     };
 
