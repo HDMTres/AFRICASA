@@ -23,7 +23,7 @@ import "./globals.css";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning={true}>
+    <html lang="fr" suppressHydrationWarning={true}>
       <body className={poppins.className}>
         <SearchForm />
         <Nav />

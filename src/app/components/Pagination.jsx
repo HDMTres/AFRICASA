@@ -17,7 +17,7 @@ function Pagination() {
                 </li>
                 <li className='page-item'>
                     <a href="#" className='page-link'>
-                        2
+                        3
                     </a>
                 </li>
                 <li className='page-item'>

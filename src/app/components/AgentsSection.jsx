@@ -24,11 +24,11 @@ function AgentsSection() {
                     <div className="col-md-12">
                         <div className="title-wrap d-flex justify-content-between">
                             <div className="title-box">
-                                <h2 className="title-a">Best Agents</h2>
+                                <h2 className="title-a">Notre Equipe</h2>
                             </div>
                             <div className="title-link">
                                 <Link href="/agents">
-                                    All Agents
+                                    Tous les membres
                                     <span className='bi bi-chevron-right'></span>
                                 </Link>
                             </div>

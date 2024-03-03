@@ -67,7 +67,7 @@ function PropertySingle({ params }) {
                                     </li>
                                     <li className="breadcrumb-item">
                                         <Link href="/properties">
-                                            Properties
+                                            Nos tandances
                                         </Link>
                                     </li>
                                     <li className="breadcrumb-item active" aria-current="page">
@@ -134,33 +134,33 @@ function PropertySingle({ params }) {
                                         <div className='summary-list'>
                                             <ul className='list'>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Property ID:</strong>
+                                                    <strong>ID:</strong>
                                                     <span>{property.id}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Location:</strong>
+                                                    <strong>Lieu:</strong>
                                                     <span>{property.location}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Property Type:</strong>
+                                                    <strong>Type:</strong>
                                                     <span>{property.type}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Status:</strong>
+                                                    <strong>Statut:</strong>
                                                     <span>{property.status}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Area:</strong>
+                                                    <strong>Espace:</strong>
                                                     <span>
                                                         {property.area}m<sup>2</sup>
                                                     </span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Beds:</strong>
+                                                    <strong>Chambre:</strong>
                                                     <span>{property.beds}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Baths:</strong>
+                                                    <strong>Sale de bain:</strong>
                                                     <span>{property.baths}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
@@ -176,7 +176,7 @@ function PropertySingle({ params }) {
                                     <div className='row'>
                                         <div className='col-sm-12'>
                                             <div className='title-box-d'>
-                                                <h3 className='title-d'>Property Description</h3>
+                                                <h3 className='title-d'>Description</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -191,7 +191,7 @@ function PropertySingle({ params }) {
                                     <div className='row section-t3'>
                                         <div className='col-sm-12'>
                                             <div className='title-box-d'>
-                                                <h3 className='title-d'>Amenities</h3>
+                                                <h3 className='title-d'>Equipement en plus</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -230,7 +230,7 @@ function PropertySingle({ params }) {
                                         href="#pills-plans"
                                         aria-selected="false"
                                     >
-                                        Floor Plans
+                                        Plan de maison
                                     </a>
                                 </li>
                                 <li className='nav-item'>
@@ -241,7 +241,7 @@ function PropertySingle({ params }) {
                                         href="#pills-map"
                                         aria-selected="false"
                                     >
-                                        Udication
+                                        Situer sur la MAP
                                     </a>
                                 </li>
                             </ul>
@@ -284,7 +284,7 @@ function PropertySingle({ params }) {
                             <div className='row section-t3'>
                                 <div className='col-sm-12'>
                                     <div className='title-box-d'>
-                                        <h3 className='title-d'>Contact Agent</h3>
+                                        <h3 className='title-d'>Contacte du Propriétaire</h3>
                                     </div>
                                 </div>
                             </div>
@@ -298,11 +298,11 @@ function PropertySingle({ params }) {
                                         <p className='color-text-a'>{agent.description}</p>
                                         <ul className='list-unstyled'>
                                             <li className='d-flex justify-content-between'>
-                                                <strong>Phone:</strong>
+                                                <strong>Numéro de Téléphone:</strong>
                                                 <span className='color-text-a'>{agent.phone}</span>
                                             </li>
                                             <li className='d-flex justify-content-between'>
-                                                <strong>Mobile:</strong>
+                                                <strong>Numéro secondaire:</strong>
                                                 <span className='color-text-a'>{agent.mobile}</span>
                                             </li>
                                             <li className='d-flex justify-content-between'>
@@ -310,7 +310,7 @@ function PropertySingle({ params }) {
                                                 <span className='color-text-a'>{agent.email}</span>
                                             </li>
                                             <li className='d-flex justify-content-between'>
-                                                <strong>Skype:</strong>
+                                                <strong>Instagram:</strong>
                                                 <span className='color-text-a'>{agent.skype}</span>
                                             </li>
                                         </ul>
@@ -352,7 +352,7 @@ function PropertySingle({ params }) {
                                                             type='text'
                                                             className='form-control form-control-lg form-control-a'
                                                             id="inputName"
-                                                            placeholder='Name *'
+                                                            placeholder='Votre nom *'
                                                             required
                                                         />
                                                     </div>
@@ -363,7 +363,7 @@ function PropertySingle({ params }) {
                                                             type='text'
                                                             className='form-control form-control-lg form-control-a'
                                                             id="inputEmail"
-                                                            placeholder='Email *'
+                                                            placeholder='Votre Email *'
                                                             required
                                                         />
                                                     </div>
@@ -373,7 +373,7 @@ function PropertySingle({ params }) {
                                                         <textarea
                                                             className='form-control'
                                                             id="textMessage"
-                                                            placeholder='Comment *'
+                                                            placeholder='Message'
                                                             name="message"
                                                             cols="45"
                                                             rows="8"
@@ -383,7 +383,7 @@ function PropertySingle({ params }) {
                                                 </div>
                                                 <div className='col-md-12 mt-3'>
                                                     <button type='submit' className='btn btn-a'>
-                                                        Send Message
+                                                        Envoyer votre Message
                                                     </button>
                                                 </div>
                                             </div>

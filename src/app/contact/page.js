@@ -10,13 +10,14 @@ function Contact() {
     return (
         <main id="main">
             <Breadcrumb
-                title="Contact US"
-                subtitle="Lorem ipsum dgfd reelghf erterl oyutro dfgldf
-                ipsum dgfd reelghf erterl oyutro dfgld fipsum dgfd reelghf erterl oyutro dfgldf
-                ipsum dgfd reelghf erterl oyutro dfgldf ipsum dgfd reelghf erterl oyutro dfgldf
-                ipsum dgfd reelghf erterl oyutro dfgldf ipsum dgfd reelghf erterl oyutro dfgldf"
-                page="Contact"
-            />
+    title="Contactez-nous"
+    subtitle="Nous sommes Loic Foutopouto et Hadama Toure, deux passionnés par notre projet, 
+    dédiés à vous offrir le meilleur service. Si vous avez des questions, des suggestions, 
+    ou si vous souhaitez simplement en savoir plus sur ce que nous faisons, n'hésitez pas à
+     nous contacter. Vous trouverez nos informations de contact ci-dessous. Nous sommes impatients d'entendre parler
+      de vous et de voir comment nous pouvons collaborer ou vous assister dans vos besoins."
+    page="Contact"
+/>
 
             <section className='contact'>
                 <div className='container'>
@@ -24,7 +25,7 @@ function Contact() {
                         <div className='col-sm-12'>
                             <div className='contact-map box'>
                                 <div className='contact-map' id="map">
-                                    <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d21407.513632171675!2d35.050459700000005!3d47.879504299999994!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sru!2sua!4v1707502284390!5m2!1sru!2sua"
+                                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2620.9060745159004!2d2.1607298769495715!3d48.93623077134293!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e663d971e192db%3A0xdc780b94e6cafa44!2s80%20Rue%20Louise%20Michel%2C%2078500%20Sartrouville!5e0!3m2!1sfr!2sfr!4v1709502768561!5m2!1sfr!2sfr"
                                         width="100%"
                                         height="450"
                                         allowFullScreen
@@ -44,16 +45,20 @@ function Contact() {
                                         </div>
                                         <div className='icon-box-content table-cell'>
                                             <div className='icon-box-title'>
-                                                <h4 className='icon-title'>Say Hello</h4>
+                                                <h4 className='icon-title'>Besoin d'infos ?</h4>
                                             </div>
                                             <div className='icon-box-content'>
                                                 <p className='mb-1'>
                                                     Email:{" "}
-                                                    <span className='color-a'>email@email.com</span>
+                                                    <span className='color-a'>africasa@gmail.com</span>
                                                 </p>
                                                 <p className='mb-1'>
-                                                    Phone:{" "}
-                                                    <span className='color-a'>+12 345 67890</span>
+                                                    Loic Steve :{" "}
+                                                    <span className='color-a'>+33 7 53 71 92 37</span>
+                                                </p>
+                                                <p className='mb-1'>
+                                                    Hadama TOURE:{" "}
+                                                    <span className='color-a'>+33 7 66 23 74 54</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -65,12 +70,12 @@ function Contact() {
                                         </div>
                                         <div className='icon-box-content table-cell'>
                                             <div className='icon-box-title'>
-                                                <h4 className='icon-title'>Find Us In</h4>
+                                                <h4 className='icon-title'>Trouvez nous dans</h4>
                                             </div>
                                             <div className='icon-box-content'>
                                                 <p className='mb-1'>
-                                                    Address: 69000 Kyiv
-                                                    <br /> Ukraine
+                                                    Siège Social: 80 rue Louise Miche
+                                                    <br />  78500 Sartrouville, FRANCE
                                                 </p>
                                             </div>
                                         </div>
@@ -82,7 +87,7 @@ function Contact() {
                                         </div>
                                         <div className='icon-box-content table-cell'>
                                             <div className='icon-box-title'>
-                                                <h4 className='icon-title'>Social Networks</h4>
+                                                <h4 className='icon-title'>Réseaux Sociaux</h4>
                                             </div>
                                             <div className='icon-box-content'>
                                                 <div className='socials-footer'>

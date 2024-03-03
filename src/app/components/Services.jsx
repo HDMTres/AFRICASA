@@ -13,7 +13,7 @@ function Services() {
                     <div className="col-md-12">
                         <div className="title-wrap d-flex justify-content-between">
                             <div className="title-box">
-                                <h2 className='title-a'>Our Services</h2>
+                                <h2 className='title-a'>Nos Services</h2>
                             </div>
                         </div>
                     </div>
@@ -26,19 +26,19 @@ function Services() {
                                     <span className='bi bi-cart'></span>
                                 </div>
                                 <div className='card-title-c align-self-center'>
-                                    <h2 className='title-c'>Lifestyle</h2>
+                                    <h2 className='title-c'>Acheter</h2>
                                 </div>
                             </div>
                             <div className="card-body-c">
                                 <p className="content-c">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Id ducimus et sed, quasi aspernatur sequi velit odio beatae
-                                    laboriosam eveniet esse eatae saepe molestias.
+                                Explorez une vaste sélection de propriétés uniques à travers l'Afrique.
+                                 Que vous cherchiez une résidence urbaine ou un refuge paisible dans la nature,
+                                  trouvez votre coin de paradis sur notre plateforme
                                 </p>
                             </div>
                             <div className="card-footer-c">
                                 <a href="#" className='link-c link-icon'>
-                                    Read More <span className='bi bi-chevron-right'></span>
+                                    Savoir Plus  <span className='bi bi-chevron-right'></span>
                                 </a>
                             </div>
                         </div>
@@ -50,19 +50,19 @@ function Services() {
                                     <span className='bi bi-calendar4-week'></span>
                                 </div>
                                 <div className='card-title-c align-self-center'>
-                                    <h2 className='title-c'>Loans</h2>
+                                    <h2 className='title-c'>Louer</h2>
                                 </div>
                             </div>
                             <div className="card-body-c">
                                 <p className="content-c">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Id ducimus et sed, quasi aspernatur sequi velit odio beatae
-                                    laboriosam eveniet esse eatae saepe molestias.
+                                Découvrez des locations adaptées à tous les besoins, 
+                                des appartements modernes en ville aux maisons traditionnelles africaines.
+                                 Vivez l'Afrique à votre rythme, avec flexibilité et confort.
                                 </p>
                             </div>
                             <div className="card-footer-c">
                                 <a href="#" className='link-c link-icon'>
-                                    Read More <span className='bi bi-calendar4-week'></span>
+                                    Savoir Plus <span className='bi bi-chevron-right'></span>
                                 </a>
                             </div>
                         </div>
@@ -74,19 +74,20 @@ function Services() {
                                     <span className='bi bi-card-checklist'></span>
                                 </div>
                                 <div className='card-title-c align-self-center'>
-                                    <h2 className='title-c'>Sell</h2>
+                                    <h2 className='title-c'>Vendre</h2>
                                 </div>
                             </div>
                             <div className="card-body-c">
                                 <p className="content-c">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Id ducimus et sed, quasi aspernatur sequi velit odio beatae
-                                    laboriosam eveniet esse eatae saepe molestias.
+                                Valorisez et vendez votre propriété avec nous. 
+                                Atteignez un large public d'acheteurs potentiels intéressés par 
+                                le charme et la diversité du marché immobilier africain. Simplifiez votre vente, 
+                                maximisez votre retour..
                                 </p>
                             </div>
                             <div className="card-footer-c">
                                 <a href="#" className='link-c link-icon'>
-                                    Read More <span className='bi bi-card-checklist'></span>
+                                    Savoir Plus <span className='bi bi-chevron-right'></span>
                                 </a>
                             </div>
                         </div>

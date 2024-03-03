@@ -1,6 +1,6 @@
 .form-as #sendmessage {
-    color: #2eca6a;
-    border: 1px solid #26a356;
+    color: #c48d17;
+    border: 1px solid #c48d17;
     display: none;
     text-align: center;
     padding: 15px;
@@ -53,7 +53,7 @@
 
 .form-as .form-control:focus {
     box-shadow: none;
-    border-color: #2eca6a;
+    border-color: #c48d17;
 }
 
 .contact-form .error-message {
@@ -67,7 +67,7 @@
 .contact-form .sent-message {
     display: none;
     color: #fff;
-    background: #18d26e;
+    background: #c48d17;
     text-align: center;
     padding: 15px;
     font-weight: 600;
@@ -87,7 +87,7 @@
     width: 24px;
     height: 24px;
     margin: 0 10px -6px 0;
-    border: 3px solid #18d26e;
+    border: 3px solid #c48d17;
     border-top-color: #eee;
     -webkit-animation: animate-loading 1s linear infinite;
     animation: animate-loading 1s linear infinite;
@@ -114,7 +114,7 @@
 
 .contact-form .form-control:focus {
     box-shadow: none;
-    border-radius: #2eca6a;
+    border-radius: #c48d17;
 }
 
 @-webkit-keyframes animate-loading {

@@ -32,11 +32,11 @@ function PropertiesSection() {
                     <div className="col-md-12">
                         <div className="title-wrap d-flex justify-content-between">
                             <div className="title-box">
-                                <h2 className='title-a'>Latest Properties</h2>
+                                <h2 className='title-a'>Dernier Ajout en Tendance</h2>
                             </div>
                             <div className="title-link">
                                 <Link href="/properties">
-                                    All Properties
+                                    Tous les ajouts
                                     <span className='bi bi-chevron-right'></span>
                                 </Link>
                             </div>

@@ -58,7 +58,7 @@ const Nav = () => {
                 </button>
 
                 <a href="/" className='navbar-brand text-brand'>
-                    Estate <span className='color-b'>Agency</span>
+                    AFRI <span className='color-b'>CASA</span>
                 </a>
 
                 <div className='navbar-collapse collapse justify-content-center' id="navbarDefault">

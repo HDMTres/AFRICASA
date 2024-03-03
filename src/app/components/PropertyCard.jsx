@@ -27,24 +27,24 @@ function PropertyCard({ property }) {
                             </span>
                         </div>
                         <Link href={`/properties/${property.id}`} className='link-a'>
-                            Click here to view
+                            Clique ici pour voir
                             <span className='bi bi-chevron-right'></span>
                         </Link>
                     </div>
                     <div className="card-footer-a">
                         <ul className="card-info d-flex justify-content-around">
                             <li>
-                                <h4 className='card-info-title'>Area</h4>
+                                <h4 className='card-info-title'>Pièce</h4>
                                 <span>
                                     {property.area}m<sup>2</sup>
                                 </span>
                             </li>
                             <li>
-                                <h4 className='card-info-title'>Beds</h4>
+                                <h4 className='card-info-title'>Chambre</h4>
                                 <span>{property.beds}</span>
                             </li>
                             <li>
-                                <h4 className='card-info-title'>Baths</h4>
+                                <h4 className='card-info-title'>Salle de Bain</h4>
                                 <span>{property.baths}</span>
                             </li>
                             <li>

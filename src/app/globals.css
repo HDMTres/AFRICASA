@@ -32,7 +32,7 @@ a {
 }
 
 a:hover {
-  color: #2eca6a;
+  color: #c48d17;
 }
 
 
@@ -126,7 +126,7 @@ a:hover {
 }
 
 .color-b {
-  color: #2eca6a;
+  color: #c48d17;
 }
 
 .color-d {
@@ -163,7 +163,7 @@ a:hover {
   bottom: -1px;
   width: 100%;
   height: 2px;
-  background-color: #2eca6a;
+  background-color: #c48d17;
   z-index: 2;
 }
 
@@ -220,7 +220,7 @@ a:hover {
 .pagination-a .pagination .page-link:hover,
 .pagination-a .pagination .page-link:active,
 .pagination-a .pagination .page-link:focus {
-  background-color: #2eca6a;
+  background-color: #c48d17;
 }
 
 .pagination-a .pagination .page-link span {
@@ -247,12 +247,12 @@ a:hover {
 }
 
 .pagination-a .pagination .page-item.active .page-link {
-  background-color: #2eca6a;
+  background-color: #c48d17;
 }
 
 .a {
   text-decoration: none;
-  color: #2eca6a;
+  color: #329960;
   font-size: 1.3rem;
 }
 
@@ -358,7 +358,7 @@ a:hover {
   position: absolute;
   width: 70px;
   height: 4px;
-  background-color: #2eca6a;
+  background-color: #c48d17;
   bottom: 20px;
   left: 0;
 }
@@ -417,7 +417,7 @@ a:hover {
 }
 
 .carousel-pagination .swiper-pagination-bullet-active {
-  background-color: #2eca6a;
+  background-color: #c48d17;
   width: 36px;
 }
 
@@ -447,7 +447,7 @@ a:hover {
   display: inline-block;
   transition: all .6s ease-in-out;
   color: #fff;
-  background-color: #2eca6a;
+  background-color: #c48d17;
   opacity: .9;
 }
 
@@ -459,7 +459,7 @@ a:hover {
 
 .nav-arrow-b .owl-arrow .owl-nav .owl-prev:hover,
 .nav-arrow-b .owl-arrow .owl-nav .owl-next:hover {
-  background-color: #2eca6a;
+  background-color: #c48d17;
 }
 
 .nav-arrow-b .owl-arrow .owl-nav .owl-next {
@@ -492,11 +492,11 @@ a:hover {
 }
 
 .btn.btn-a:hover {
-  background-color: #2eca6a;
+  background-color: #c48d17;
 }
 
 .btn.btn-b {
-  background-color: #2eca6a;
+  background-color: #c48d17;
   color: #000;
 }
 
@@ -506,13 +506,13 @@ a:hover {
 }
 
 .btn.btn-b-n {
-  background-color: #2eca6a;
+  background-color: #c48d17;
   color: #fff;
   border-radius: 0;
 }
 
 .btn.btn-b-n:hover {
-  background-color: #2eca6a;
+  background-color: #c48d17;
   color: #fff;
 }
 
@@ -633,7 +633,7 @@ a:hover {
 
 .intro-single .title-single-box {
   padding: 1rem 0 1rem 2rem;
-  border-left: 3px solid #2eca6a;
+  border-left: 3px solid #c48d17;
 }
 
 .intro-single .title-single-box .title-single {

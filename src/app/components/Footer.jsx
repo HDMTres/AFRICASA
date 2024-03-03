@@ -13,24 +13,24 @@ function Footer() {
                         <div className="col-sm-12 col-md-4">
                             <div className="widget-a">
                                 <div className="w-header-a">
-                                    <h3 className='w-title-a text-brand'>EstateAgency</h3>
+                                    <h3 className='w-title-a text-brand'>AFRICASA</h3>
                                 </div>
                                 <div className="w-body-a">
                                     <p className="w-text-a color-text-a">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                        Deserunt quaerat excepturi, sunt laborum quod mollitia velit
-                                        reiciendis pariatur.
+                                    AFRICA est un portail immobilier pionnier dédié exclusivement au marché africain, 
+                                    offrant une plateforme exhaustive où les utilisateurs peuvent acheter, vendre, et louer 
+                                    des appartements à travers tout le continent africain.
                                     </p>
                                 </div>
                                 <div className="w-footer-a">
                                     <ul className="list-unstyled">
                                         <li className="color-a">
-                                            <span className='color-text-a'>Phone ,</span>{' '}
-                                            +12 345 67890
+                                            <span className='color-text-a'>Numéro:</span>{' '}
+                                            +01 23 45 67 89
                                         </li>
                                         <li className="color-a">
-                                            <span className='color-text-a'>Email ,</span>{' '}
-                                            email@email.com
+                                            <span className='color-text-a'>Email:</span>{' '}
+                                            africasa@gmail.com
                                         </li>
                                     </ul>
                                 </div>
@@ -39,7 +39,7 @@ function Footer() {
                         <div className="col-sm-12 col-md-4 section-md-t3">
                             <div className="widget-a">
                                 <div className="w-header-a">
-                                    <h3 className='w-title-a text-brand'>The Company</h3>
+                                    <h3 className='w-title-a text-brand'>Notre Entreprise</h3>
                                 </div>
                                 <div className="w-body-a">
                                     <div className="w-body-a">
@@ -50,23 +50,23 @@ function Footer() {
                                             </li>
                                             <li className="item-list-a">
                                                 <i className="bi bi-chevron-right"></i>{' '}
-                                                <a href="#">Legal</a>
+                                                <a href="#">Qui sommes nous ?</a>
                                             </li>
                                             <li className="item-list-a">
                                                 <i className="bi bi-chevron-right"></i>{' '}
-                                                <a href="#">Agent Admin</a>
+                                                <a href="#">Fondateurs</a>
                                             </li>
                                             <li className="item-list-a">
                                                 <i className="bi bi-chevron-right"></i>{' '}
-                                                <a href="#">Careers</a>
+                                                <a href="#">Notre objectif</a>
                                             </li>
                                             <li className="item-list-a">
                                                 <i className="bi bi-chevron-right"></i>{' '}
-                                                <a href="#">Affiliate</a>
+                                                <a href="#">Nos partenaires</a>
                                             </li>
                                             <li className="item-list-a">
                                                 <i className="bi bi-chevron-right"></i>{' '}
-                                                <a href="#">Privacy Policy</a>
+                                                <a href="#">Politique de Confidentialité</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -76,33 +76,33 @@ function Footer() {
                         <div className="col-sm-12 col-md-4 section-md-t3">
                             <div className="widget-a">
                                 <div className="w-header-a">
-                                    <h3 className="w-title-a text-brand">International sites</h3>
+                                    <h3 className="w-title-a text-brand">Nos différents sites</h3>
                                 </div>
                                 <div className="w-body-a">
                                     <ul className="list-unstyled">
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">Vietnam</a>
+                                            <a href="#">Cameroun</a>
                                         </li>
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">India</a>
+                                            <a href="#">Côte D'Ivoire</a>
                                         </li>
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">Hong Kong</a>
+                                            <a href="#">Mali</a>
                                         </li>
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">Argentina</a>
+                                            <a href="#">Autre</a>
                                         </li>
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">Singapore</a>
+                                            <a href="#">Autre</a>
                                         </li>
                                         <li className="item-list-a">
                                             <i className="bi bi-chevron-right"></i>{" "}
-                                            <a href="#">Philippines</a>
+                                            <a href="#">Autre</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -118,19 +118,19 @@ function Footer() {
                             <nav className="nav-footer">
                                 <ul className="list-inline">
                                     <li className="list-inline-item">
-                                        <Link href="/">Home</Link>
+                                        <Link href="/">Accueil</Link>
                                     </li>
                                     <li className="list-inline-item">
-                                        <Link href="/about">About</Link>
+                                        <Link href="/about">A Propos</Link>
                                     </li>
                                     <li className="list-inline-item">
-                                        <Link href="/properties">Property</Link>
+                                        <Link href="/properties">Propriété</Link>
                                     </li>
                                     <li className="list-inline-item">
-                                        <Link href="/agent">Agent</Link>
+                                        <Link href="/agent">Equipe</Link>
                                     </li>
                                     <li className="list-inline-item">
-                                        <Link href="/contact">Contact</Link>
+                                        <Link href="/contact">Contacte</Link>
                                     </li>
                                 </ul>
                             </nav>
@@ -163,11 +163,11 @@ function Footer() {
                             <div className="copyright-footer">
                                 <p className="copyright color-text-a">
                                     &copy; Copyright {" "}
-                                    <span className='color-a'>EstateAgency</span> All Rights Reserved.
+                                    <span className='color-a'>AFRICASA</span> All Rights Reserved.
                                 </p>
                             </div>
                             <div className="credits">
-                                Designed by <a href="#">Freetime Tech.</a>
+                                Designed by <a href="#">Loic&Hadama</a>
                             </div>
                         </div>
                     </div>
