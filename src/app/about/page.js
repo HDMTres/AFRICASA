@@ -41,9 +41,9 @@ function About() {
                             </div>
                             <div className='sinse-box'>
                                 <h3 className='sinse-title'>
-                                    EstateAgency
+                                    AFRICASA
                                     <span></span>
-                                    <br /> Sinse 2017
+                                    <br /> Depuis 2024
                                 </h3>
                                 <p>Art & Creative</p>
                             </div>
@@ -55,7 +55,7 @@ function About() {
                                 </div>
                                 <div className='col-lg-2 d-none d-lg-block position-relative'>
                                     <div className='title-vertical d-flex justify-content-start'>
-                                        <span>EstateAgency Exclusive Property</span>
+                                        <span>AFRICASA Exclusive Property</span>
                                     </div>
                                 </div>
                                 <div className='col-md-6 col-lg-5 section-md-t3'>
@@ -91,7 +91,7 @@ function About() {
                         <div className='col-md-12'>
                             <div className='title-wrap d-flex justify-content-between'>
                                 <div className='title-box'>
-                                    <h2 className='title-a'>Meet Our Team</h2>
+                                    <h2 className='title-a'>Rencontre notre equipe</h2>
                                 </div>
                             </div>
                         </div>

@@ -3,18 +3,18 @@ const nav = [
     id: 1,
     link: '/',
     name: `Accueil`,
-    active: true,
+    active: false,
   },
   {
     id: 2,
     link: '/about',
-    name: `A propos`,
+    name: `A Propos`,
     active: false,
   },
   {
     id: 3,
     link: '/properties',
-    name: `Nos Tandances`,
+    name: `Nos Tendances`,
     active: false,
   },
   {
@@ -28,6 +28,12 @@ const nav = [
     link: '/contact',
     name: `Contact`,
     active: false,
+  },
+  {
+    id: 6,
+    link: '/login',
+    name: `Se Connecter`,
+    active: true,
   },
 ];
 

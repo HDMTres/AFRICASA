@@ -30,7 +30,7 @@ function AgentSingle({ params }) {
                         <div className='col-md-12 col-lg-8'>
                             <div className='title-single-box'>
                                 <h1 className='title-single'>{agent.name}</h1>
-                                <span className='color-text-a'>Real Estate Agent</span>
+                                <span className='color-text-a'>AFRICASA Agent</span>
                             </div>
                         </div>
                         <div className='col-md-12 col-lg-4'>
