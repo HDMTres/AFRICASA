@@ -10,12 +10,19 @@ import Pagination from '../components/Pagination';
 function PropertyList() {
     const [properties, setProperties] = useState([]);
 
-    const fetchData = () => {
-        fetch('https://christmas-04.onrender.com/estateAgency/')
-            .then(res => res.json())
-            .then(data => setProperties(data[0]['properties']))
-            .catch(err => console.log(err.message));
-    };
+    const fetchData = async () => {
+            try {
+                const response = await fetch('http://127.0.0.1:8080/properties');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch properties');
+                }
+                const data = await response.json();
+                setProperties(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        
 
     useEffect(() => {
         fetchData();

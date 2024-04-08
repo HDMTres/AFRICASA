@@ -15,13 +15,6 @@ function PropertySingle({ params }) {
     const [property, setProperty] = useState({});
     const [agent, setAgent] = useState({});
 
-    const fetchData = () => {
-        fetch(`https://christmas-04.onrender.com/estateAgency/`)
-            .then(res => res.json())
-            .then(data => setProperty(data[0]['properties'][id - 1]))
-            .catch(err => console.log(err.message));
-    }
-
     const fetchAgent = () => {
         if (property.agent) {
             fetch(`https://christmas-04.onrender.com/estateAgency/`)
@@ -32,8 +25,20 @@ function PropertySingle({ params }) {
     }
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`http://127.0.0.1:8080/properties/${id}`)
+                if (!response.ok) {
+                    throw new Error('Failed to fetch property')
+                }
+                const data = await response.json()
+                setProperty(data)
+            } catch (error) {
+                console.error(error)
+            } 
+        }
+        fetchData()
+    }, [id]);
 
     useEffect(() => {
         if (property.agent === null) return;
@@ -48,8 +53,7 @@ function PropertySingle({ params }) {
                         <div className='col-md-12 col-lg-8'>
                             <div className='title-single-box'>
                                 <h1 className='title-single'>
-                                    {property.number} {property.addressOne}{" "}
-                                    {property.addressTwo}
+                                    {property.title}
                                 </h1>
                                 <span className='color-text-a'>{property.location}</span>
                             </div>
@@ -67,12 +71,11 @@ function PropertySingle({ params }) {
                                     </li>
                                     <li className="breadcrumb-item">
                                         <Link href="/properties">
-                                            Nos tandances
+                                            Nos tendances
                                         </Link>
                                     </li>
                                     <li className="breadcrumb-item active" aria-current="page">
-                                        {property.number} {property.addressOne}{" "}
-                                        {property.addressTwo}
+                                        {property.title}
                                     </li>
                                 </ol>
                             </nav>
@@ -99,12 +102,12 @@ function PropertySingle({ params }) {
                                 loop={true}
                                 className='swiper'
                             >
-                                <SwiperSlide className='carousel-item-b'>
-                                    <img src={property.bgImg} alt="bg" className='img-fluid' />
-                                </SwiperSlide>
-                                <SwiperSlide className='carousel-item-b'>
-                                    <img src={property.slideImg} alt="bg" className='img-fluid' />
-                                </SwiperSlide>
+                                {property.photos && property.photos.length > 0 &&
+                                    property.photos.map((photo, index) => (
+                                        <SwiperSlide key={index} className='carousel-item-b'>
+                                            <img src={photo} alt={`photo-${index}`} className='img-fluid' />
+                                        </SwiperSlide>
+                                    ))}
                                 <div className="property-single-carousel-pagination carousel-pagination"></div>
                             </Swiper>
                         </div>
@@ -135,7 +138,7 @@ function PropertySingle({ params }) {
                                             <ul className='list'>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>ID:</strong>
-                                                    <span>{property.id}</span>
+                                                    <span>{property.externalID}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>Lieu:</strong>
@@ -143,24 +146,24 @@ function PropertySingle({ params }) {
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>Type:</strong>
-                                                    <span>{property.type}</span>
+                                                    <span>{property.propertyType}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>Statut:</strong>
-                                                    <span>{property.status}</span>
+                                                    <span>{property.purpose}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>Espace:</strong>
                                                     <span>
-                                                        {property.area}m<sup>2</sup>
+                                                        {property.sqSize}m<sup>2</sup>
                                                     </span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
                                                     <strong>Chambre:</strong>
-                                                    <span>{property.beds}</span>
+                                                    <span>{property.rooms}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
-                                                    <strong>Sale de bain:</strong>
+                                                    <strong>Salle de bain:</strong>
                                                     <span>{property.baths}</span>
                                                 </li>
                                                 <li className='d-flex justify-content-between'>
@@ -191,7 +194,7 @@ function PropertySingle({ params }) {
                                     <div className='row section-t3'>
                                         <div className='col-sm-12'>
                                             <div className='title-box-d'>
-                                                <h3 className='title-d'>Equipement en plus</h3>
+                                                <h3 className='title-d'>Équipements en plus</h3>
                                             </div>
                                         </div>
                                     </div>
@@ -202,192 +205,6 @@ function PropertySingle({ params }) {
                                                     <li key={index}>{item}</li>
                                                 ))}
                                         </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-10 offset-md-1'>
-                            <ul
-                                className='nav nav-pills-a nav-pills mb-3 section-t3'
-                                id="pills-tab"
-                            >
-                                <li className='nav-item'>
-                                    <a
-                                        className='nav-link active'
-                                        id="pills-video-tab"
-                                        data-bs-toggle="pill"
-                                        href="#pills-video"
-                                        aria-selected="true"
-                                    >
-                                        Video
-                                    </a>
-                                </li>
-                                <li className='nav-item'>
-                                    <a
-                                        className='nav-link'
-                                        id="pills-video-tab"
-                                        data-bs-toggle="pill"
-                                        href="#pills-plans"
-                                        aria-selected="false"
-                                    >
-                                        Plan de maison
-                                    </a>
-                                </li>
-                                <li className='nav-item'>
-                                    <a
-                                        className='nav-link'
-                                        id="pills-map-tab"
-                                        data-bs-toggle="pill"
-                                        href="#pills-map"
-                                        aria-selected="false"
-                                    >
-                                        Situer sur la MAP
-                                    </a>
-                                </li>
-                            </ul>
-                            <div className='tab-content' id='pills-tabContent'>
-                                <div
-                                    className='tab-pane fade show active'
-                                    id="pills-video"
-                                    aria-labelledby='pills-video-tab'
-                                >
-                                    <iframe
-                                        src={property.video}
-                                        width="100%"
-                                        height="460"
-                                        allowFullScreen
-                                    ></iframe>
-                                </div>
-                                <div
-                                    className='tab-pane fade'
-                                    id="pills-plans"
-                                    aria-labelledby='pills-plans-tab'
-                                >
-                                    <img src={property.floorPlans} className='img-fluid' />
-                                </div>
-                                <div
-                                    className='tab-pane fade'
-                                    id="pills-map"
-                                    aria-labelledby='pills-map-tab'
-                                >
-                                    <iframe
-                                        src={property.map}
-                                        width="100%"
-                                        height="460"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                    ></iframe>
-                                </div>
-                            </div>
-                        </div>
-                        <div className='col-md-12'>
-                            <div className='row section-t3'>
-                                <div className='col-sm-12'>
-                                    <div className='title-box-d'>
-                                        <h3 className='title-d'>Contacte du Propriétaire</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='row'>
-                                <div className='col-md-6 col-lg-4'>
-                                    <img src={agent.profileImg} className='img-fluid' alt="profile" />
-                                </div>
-                                <div className='col-md-6 col-lg-4'>
-                                    <div className='property-agent'>
-                                        <h4 className='title-agent'>{agent.name}</h4>
-                                        <p className='color-text-a'>{agent.description}</p>
-                                        <ul className='list-unstyled'>
-                                            <li className='d-flex justify-content-between'>
-                                                <strong>Numéro de Téléphone:</strong>
-                                                <span className='color-text-a'>{agent.phone}</span>
-                                            </li>
-                                            <li className='d-flex justify-content-between'>
-                                                <strong>Numéro secondaire:</strong>
-                                                <span className='color-text-a'>{agent.mobile}</span>
-                                            </li>
-                                            <li className='d-flex justify-content-between'>
-                                                <strong>Email:</strong>
-                                                <span className='color-text-a'>{agent.email}</span>
-                                            </li>
-                                            <li className='d-flex justify-content-between'>
-                                                <strong>Instagram:</strong>
-                                                <span className='color-text-a'>{agent.skype}</span>
-                                            </li>
-                                        </ul>
-
-                                        <div className='socials-a'>
-                                            <ul className='list-inline'>
-                                                <li className='list-inline-item'>
-                                                    <a href={agent.facebook}>
-                                                        <i className='bi bi-facebook' aria-hidden="true"></i>
-                                                    </a>
-                                                </li>
-                                                <li className='list-inline-item'>
-                                                    <a href={agent.twitter}>
-                                                        <i className='bi bi-twitter' aria-hidden="true"></i>
-                                                    </a>
-                                                </li>
-                                                <li className='list-inline-item'>
-                                                    <a href={agent.instagram}>
-                                                        <i className='bi bi-instagram' aria-hidden="true"></i>
-                                                    </a>
-                                                </li>
-                                                <li className='list-inline-item'>
-                                                    <a href={agent.linkedin}>
-                                                        <i className='bi bi-linkedin' aria-hidden="true"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className='col-md-12 col-lg-4'>
-                                    <div className='property-contact'>
-                                        <form className='form-a'>
-                                            <div className='row'>
-                                                <div className='col-md-12 mb-1'>
-                                                    <div className='form-group'>
-                                                        <input
-                                                            type='text'
-                                                            className='form-control form-control-lg form-control-a'
-                                                            id="inputName"
-                                                            placeholder='Votre nom *'
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className='col-md-12 mb-1'>
-                                                    <div className='form-group'>
-                                                        <input
-                                                            type='text'
-                                                            className='form-control form-control-lg form-control-a'
-                                                            id="inputEmail"
-                                                            placeholder='Votre Email *'
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className='col-md-12 mb-1'>
-                                                    <div className='form-group'>
-                                                        <textarea
-                                                            className='form-control'
-                                                            id="textMessage"
-                                                            placeholder='Message'
-                                                            name="message"
-                                                            cols="45"
-                                                            rows="8"
-                                                            required
-                                                        ></textarea>
-                                                    </div>
-                                                </div>
-                                                <div className='col-md-12 mt-3'>
-                                                    <button type='submit' className='btn btn-a'>
-                                                        Envoyer votre Message
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>

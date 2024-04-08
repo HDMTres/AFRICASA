@@ -14,11 +14,17 @@ import PropertyCard from './PropertyCard';
 function PropertiesSection() {
     const [properties, setProperties] = useState([]);
 
-    const fetchData = () => {
-        fetch('https://christmas-04.onrender.com/estateAgency/')
-            .then(res => res.json())
-            .then(data => setProperties(data[0]['properties']))
-            .catch(err => err.message);
+    const fetchData = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8080/properties');
+            if (!response.ok) {
+                throw new Error('Failed to fetch properties');
+            }
+            const data = await response.json();
+            setProperties(data);
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(() => {
@@ -72,7 +78,7 @@ function PropertiesSection() {
                 >
                     {properties && properties.length > 0 &&
                         properties.slice(0, 4).map(property => (
-                            <SwiperSlide key={property.id}>
+                            <SwiperSlide key={property._id}>
                                 <PropertyCard property={property} />
                             </SwiperSlide>
                         ))}
