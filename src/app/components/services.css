@@ -59,7 +59,38 @@
 
 
 
+.link-c {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2.5rem;
+    border: 5px solid #c48d17;
+    background-color: transparent;
+    color: #000;
+    /* Couleur du texte */
+    font-size: 16px;
+    /* Taille de la police */
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
+.link-c:hover {
+    background-color: #c48d17;
+    /* Couleur de fond au survol */
+    color: #fff;
+    /* Couleur du texte au survol */
+}
+
+.link-icon {
+    display: flex;
+    align-items: center;
+}
+
+.bi-chevron-right {
+    margin-left: 0.5rem;
+    /* Espacement à droite de l'icône */
+}
 
 
 

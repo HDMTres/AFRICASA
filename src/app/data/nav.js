@@ -8,7 +8,7 @@ const nav = [
   {
     id: 2,
     link: '/about',
-    name: `A Propos`,
+    name: `A Propos De Nous`,
     active: false,
   },
   {
@@ -26,7 +26,7 @@ const nav = [
   {
     id: 5,
     link: '/contact',
-    name: `Contact`,
+    name: `Nous Contacter`,
     active: false,
   },
   {

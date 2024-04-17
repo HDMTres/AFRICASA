@@ -19,7 +19,7 @@ exports.createProperty = async (req, res) => {
   }
 }
 
-exports.getAllproperties = async (req, res) => {
+exports.getAllProperties = async (req, res) => {
   try {
 
     const properties = await Property.find()

@@ -11,11 +11,7 @@ function Contact() {
         <main id="main">
             <Breadcrumb
     title="Contactez-nous"
-    subtitle="Nous sommes Loic STEVE Foutopouo et Hadama Toure, deux passionnés par notre projet, 
-    dédiés à vous offrir le meilleur service. Si vous avez des questions, des suggestions, 
-    ou si vous souhaitez simplement en savoir plus sur ce que nous faisons, n'hésitez pas à
-     nous contacter. Vous trouverez nos informations de contact ci-dessous. Nous sommes impatients d'entendre parler
-      de vous et de voir comment nous pouvons collaborer ou vous assister dans vos besoins."
+    subtitle="N'hésitez pas à nous contacter pour toute demande d'informations supplémentaires sur nos services, pour échanger au sujet d'un bien spécifique ou pour nous faire part de vos suggestions. Chez AFRICASA, nous sommes à votre écoute et prêts à répondre à toutes vos questions. Utilisez simplement le formulaire ci-dessous pour nous envoyer un message, et notre équipe se fera un plaisir de vous assister. Nous sommes impatients de vous accompagner dans votre projet immobilier!"
     page="Contact"
 />
 

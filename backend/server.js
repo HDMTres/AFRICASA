@@ -22,9 +22,12 @@ mongoose.connect(process.env.MONGODB_URI, {
 // Routes
 const userRoutes = require('./routes/userRoute');
 const propertyRoutes = require('./routes/propertyRoute')
+const mailsRoutes = require('./routes/mailRoute')
 
 app.use('/users', userRoutes);
 app.use('/properties', propertyRoutes)
+app.use('/mails', mailsRoutes)
+
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
