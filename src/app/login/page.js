@@ -21,7 +21,7 @@ const Login = () => {
             if (response.ok) {
                 // Rediriger l'utilisateur après la connexion réussie
                 // Par exemple, vers la page d'accueil
-                window.location.href = '/';
+                window.location.href = '/dashboard';
             } else {
                 // Gérer le cas où l'authentification échoue
                 setErrorMessage('Nom d\'utilisateur ou mot de passe incorrect');

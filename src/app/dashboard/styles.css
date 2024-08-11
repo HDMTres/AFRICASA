@@ -1,0 +1,155 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.dashboard-container {
+  font-family: 'Poppins', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('/assets/safari.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.wrapper {
+  width: 900px;
+  /* Largeur du conteneur */
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, .2);
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px 40px;
+}
+
+.dashboard {
+  text-align: center;
+}
+
+.dashboard h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.dashboard-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+  /* Ajouter un espace entre les cases */
+}
+
+.dashboard-button {
+  width: 45%;
+  /* Ajuster la largeur des cases */
+  background: rgba(255, 255, 255, .2);
+  border: 2px solid rgba(255, 255, 255, .2);
+  border-radius: 10px;
+  padding: 40px;
+  /* Augmenter le padding pour rendre les cases plus grandes */
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.dashboard-button .icon {
+  font-size: 36px;
+  /* Augmenter la taille de l'icône */
+  margin-bottom: 10px;
+}
+
+.dashboard-button span {
+  display: block;
+  font-size: 20px;
+  /* Augmenter la taille du texte */
+  font-weight: 600;
+}
+
+.dashboard-button:hover {
+  background: rgba(255, 255, 255, .4);
+  transform: scale(1.05);
+}
+
+.dashboard-navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.brand-link {
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff !important;
+  display: flex;
+  align-items: center;
+}
+
+.logo-afri {
+  color: #fff;
+}
+
+.logo-casa {
+  color: #ff0000;
+}
+
+.nav-link {
+  color: #fff !important;
+  margin-right: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.nav-link:hover {
+  color: #ddd !important;
+  text-decoration: underline;
+}
+
+.profile-link {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  object-fit: cover;
+  cursor: pointer;
+}
+
+#profile-dropdown {
+  background: none;
+  border: none;
+}
+
+#profile-dropdown .dropdown-menu {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: none;
+}
+
+#profile-dropdown .dropdown-item {
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+#profile-dropdown .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#profile-dropdown .dropdown-item svg {
+  margin-right: 5px;
+}
