@@ -1,13 +1,14 @@
 "use client"
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaHome, FaExclamationTriangle, FaGoogle, FaFacebookF, FaCheck } from 'react-icons/fa';
 import { MdSecurity, MdDashboard, MdLocationSearching } from 'react-icons/md';
 import NoNavLayout from '../components/NoNavLayout';
 
 const Login = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState(''); // Changé de username à email
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -15,6 +16,7 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [rememberMe, setRememberMe] = useState(false);
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     // Vérifier si l'utilisateur vient de s'inscrire avec succès
     useEffect(() => {
@@ -31,33 +33,55 @@ const Login = () => {
         setSuccessMessage('');
         
         try {
-            const response = await fetch('http://127.0.0.1:8080/users/signin', {
+            console.log('🔄 Tentative de connexion vers: http://localhost:5000/api/users/login');
+            
+            // URL CORRIGÉE
+            const response = await fetch('http://localhost:5000/api/users/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ 
+                    email: email,  // Changé de username à email
+                    password: password 
+                })
             });
             
-            const data = await response.json();
+            console.log('📡 Réponse reçue:', response.status);
             
             if (response.ok) {
-                // Stocker le token JWT
+                const data = await response.json();
+                console.log('✅ Connexion réussie:', data.message);
+                
+                // Stocker les données
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('isAuth', 'true');
-                localStorage.setItem('username', username);
+                localStorage.setItem('userEmail', email);
                 
-                // Stocker davantage d'informations si "Se souvenir de moi" est coché
+                if (data.user) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                }
+                
                 if (rememberMe) {
                     localStorage.setItem('remember_me', 'true');
                 }
                 
-                // Rediriger vers le dashboard
-                window.location.href = '/dashboard';
+                // ✅ MARQUER QUE L'UTILISATEUR VIENT DE SE CONNECTER
+                localStorage.setItem('justLoggedIn', 'true');
+                
+                // Redirection intelligente selon le rôle
+                if (data.user && data.user.role === 'agent') {
+                    window.location.href = '/dashboard';
+                } else {
+                    window.location.href = '/';
+                }
+                
             } else {
-                setErrorMessage(data.message || 'Nom d\'utilisateur ou mot de passe incorrect');
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Erreur de connexion');
             }
+            
         } catch (error) {
-            console.error('Erreur lors de la connexion :', error);
-            setErrorMessage('Erreur de connexion. Vérifiez votre connexion internet.');
+            console.error('❌ Erreur lors de la connexion :', error);
+            setErrorMessage(error.message || 'Erreur de connexion. Vérifiez vos identifiants.');
         } finally {
             setIsLoading(false);
         }
@@ -106,15 +130,15 @@ const Login = () => {
                             
                             <form onSubmit={handleLogin}>
                                 <div className="input-group">
-                                    <label htmlFor="username">Nom d'utilisateur</label>
+                                    <label htmlFor="email">Email</label> {/* Changé le label */}
                                     <div className="input-box">
                                         <FaUser className="input-icon" />
                                         <input 
-                                            id="username"
-                                            type="text" 
-                                            placeholder="Votre nom d'utilisateur" 
-                                            value={username} 
-                                            onChange={(e) => setUsername(e.target.value)} 
+                                            id="email"
+                                            type="email" // Changé le type
+                                            placeholder="Votre adresse email" // Changé le placeholder
+                                            value={email} 
+                                            onChange={(e) => setEmail(e.target.value)} 
                                             required 
                                         />
                                     </div>

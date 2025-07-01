@@ -116,34 +116,42 @@ const Signup = () => {
         }
 
         try {
+            console.log('🔄 Tentative d\'inscription vers: http://localhost:5000/api/users/register');
+            
+            // Format des données pour le backend AFRICASA
             const requestData = {
-                firstName: formData.firstName,
-                name: formData.name,
+                fullName: `${formData.firstName} ${formData.name}`, // Combinaison prénom + nom
                 email: formData.email,
-                address: formData.address,
                 password: formData.password,
-                username: formData.username,
                 phoneNumber: selectedCountryCode + formData.phoneNumber,
                 role: formData.role
             };
 
-            const response = await fetch('http://127.0.0.1:8080/users/signup', {
+            console.log('📋 Données envoyées:', requestData);
+
+            // URL CORRIGÉE
+            const response = await fetch('http://localhost:5000/api/users/register', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(requestData)
             });
             
-            const data = await response.json();
+            console.log('📡 Réponse reçue:', response.status);
             
-            if (response.ok) {
-                // Redirection vers la page de connexion
-                router.push("/login?message=inscription-reussie");
-            } else {
-                setErrorMessage(data.message || "Erreur lors de l'inscription. Vérifiez vos informations.");
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Erreur lors de l\'inscription');
             }
+            
+            const data = await response.json();
+            console.log('✅ Inscription réussie:', data.message);
+            
+            // Redirection vers la page de connexion avec message de succès
+            router.push("/login?message=inscription-reussie");
+            
         } catch (error) {
-            console.error("Erreur lors de l'inscription:", error);
-            setErrorMessage("Erreur de connexion. Vérifiez votre connexion internet.");
+            console.error("❌ Erreur lors de l'inscription:", error);
+            setErrorMessage(error.message || "Erreur de connexion. Vérifiez vos informations.");
         } finally {
             setIsLoading(false);
         }
@@ -308,7 +316,7 @@ const Signup = () => {
                                             <label htmlFor="user">
                                                 <span>👤</span>
                                                 <strong>Particulier</strong>
-                                                <p>Rechercher et acheter des biens</p>
+                                                <p>Rechercher and acheter des biens</p>
                                             </label>
                                         </div>
                                         <div className="role-option">
