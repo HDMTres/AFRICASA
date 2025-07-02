@@ -2,7 +2,7 @@ services:
   # Base de données MongoDB (utilise votre container existant)
   mongodb:
     image: mongo:latest
-    container_name: africasa-mongodb
+    container_name: africasa-mongodb-1
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: africasa2024

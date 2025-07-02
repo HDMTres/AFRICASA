@@ -10,9 +10,6 @@ const nextConfig = {
   
   // Configuration pour la production
   swcMinify: true,
-  
-  // Désactiver la télémétrie
-  telemetry: false,
 }
 
 export default nextConfig

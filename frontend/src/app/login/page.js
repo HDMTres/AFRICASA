@@ -1,10 +1,8 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaHome, FaExclamationTriangle, FaGoogle, FaFacebookF, FaCheck } from 'react-icons/fa';
-import { MdSecurity, MdDashboard, MdLocationSearching } from 'react-icons/md';
 
 const Login = () => {
     const [email, setEmail] = useState(''); // Changé de username à email
@@ -205,4 +203,10 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default function LoginPage() {
+    return (
+        <Suspense fallback={<div>Chargement de la page de connexion...</div>}>
+            <Login />
+        </Suspense>
+    );
+}
