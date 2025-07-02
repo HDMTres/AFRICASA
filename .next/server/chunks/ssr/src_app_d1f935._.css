@@ -1,0 +1,228 @@
+/* [project]/src/app/components/agentCard.css [app-ssr] (css) */
+.card-box-d .card-overlay-hover {
+  transition: all .2s ease-in-out;
+  padding: 15px 40px 15px 35px;
+}
+
+@media (width >= 768px) {
+  .card-box-d .card-overlay-hover {
+    padding: 5px 15px 5px 10px;
+  }
+}
+
+@media (width >= 992px) {
+  .card-box-d .card-overlay-hover {
+    padding: 5px 40px 5px 35px;
+  }
+}
+
+@media (width >= 1200px) {
+  .card-box-d .card-overlay-hover {
+    padding: 15px 40px 5px 35px;
+  }
+}
+
+.card-box-d .title-d {
+  transition: all .3s ease-in-out;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+@media (width >= 768px) {
+  .card-box-d .title-d {
+    font-size: 1.1rem;
+    margin: .5rem 0;
+  }
+}
+
+@media (width >= 992px) {
+  .card-box-d .title-d {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+}
+
+@media (width >= 1200px) {
+  .card-box-d .title-d {
+    font-size: 2rem;
+  }
+}
+
+.card-box-d .content-d {
+  opacity: 0;
+  transition: all .5s ease-in-out;
+  transform: translateY(-40px);
+}
+
+@media (width >= 768px) {
+  .card-box-d .content-d {
+    font-size: .8rem;
+    margin: .5rem 0;
+  }
+}
+
+@media (width >= 768px) {
+  .card-box-d .card-body-d p {
+    margin-bottom: 8px;
+    font-size: .8rem;
+  }
+}
+
+@media (width >= 768px) {
+  .card-box-d .card-body-d p {
+    margin-bottom: 12px;
+    font-size: .7rem;
+  }
+}
+
+.card-box-d .card-footer-d {
+  transition: all .5s ease-in-out;
+  transform: translateY(40px);
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  bottom: 10px;
+  left: 0;
+}
+
+.card-box-d .list-inline-item:not(:last-child) {
+  margin-right: 25px;
+}
+
+.card-box-d:hover .card-overlay-hover {
+  background-color: #c48d17;
+  opacity: .9;
+}
+
+.card-box-d .info-agents {
+  opacity: 0;
+  scale: 0;
+  transition: all 1s ease-in-out;
+}
+
+.card-box-d:hover .title-d, .card-box-d:hover .content-d, .card-box-d:hover .info-agents, .card-box-d:hover .card-footer-d {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-box-d:hover .info-agents {
+  scale: 1;
+}
+
+
+/* [project]/src/app/about/styles.css [app-ssr] (css) */
+.section-about .title-vertical {
+  position: absolute;
+  letter-spacing: 0;
+  transform: rotate(-90deg);
+  top: 112px;
+  right: -50px;
+  font-size: 1.8rem;
+  width: 300px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.about-img-box {
+  padding-left: 1rem;
+  position: relative;
+}
+
+@media (width >= 576px) {
+  .about-img-box {
+    padding-left: 4rem;
+  }
+}
+
+@media (width >= 768px) {
+  .about-img-box {
+    padding-left: 5rem;
+  }
+}
+
+.sinse-box {
+  background-color: #2eca6a;
+  padding: 1rem 2rem;
+  position: absolute;
+  left: 15px;
+  bottom: 10px;
+}
+
+@media (width >= 576px) {
+  .sinse-box {
+    padding: 1.5rem 2.5rem;
+    bottom: 20px;
+  }
+}
+
+@media (width >= 767px) {
+  .sinse-box {
+    padding: 1.5rem 3rem;
+  }
+}
+
+@media (width >= 992px) {
+  .sinse-box {
+    padding: 3rem 4.5rem;
+  }
+}
+
+.sinse-box .sinse-title {
+  font-weight: 700;
+  letter-spacing: .043em;
+  font-size: 1rem;
+}
+
+@media (width >= 576px) {
+  .sinse-box .sinse-title {
+    font-size: 1.3rem;
+  }
+}
+
+@media (width >= 768px) {
+  .sinse-box .sinse-title {
+    font-size: 1.8rem;
+  }
+}
+
+@media (width >= 992px) {
+  .sinse-box .sinse-title {
+    font-size: 2.2rem;
+  }
+}
+
+.sinse-box .sinse-title span {
+  position: absolute;
+}
+
+.sinse-box .sinse-title span:after {
+  content: "";
+  width: 35px;
+  height: 2px;
+  background-color: #000;
+  position: absolute;
+  bottom: -15px;
+}
+
+.sinse-box p {
+  margin-bottom: 0;
+  font-size: .7rem;
+}
+
+@media (width >= 576px) {
+  .sinse-box p {
+    font-size: .8rem;
+  }
+}
+
+@media (width >= 767px) {
+  .sinse-box p {
+    font-size: 1rem;
+  }
+}
+
+
+/*# sourceMappingURL=src_app_d1f935._.css.map*/

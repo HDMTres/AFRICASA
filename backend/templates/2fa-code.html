@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code de vérification 2FA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c7be5 0%, #1a68d1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            color: #2c7be5;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .code-container {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #2c7be5;
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+        
+        .code {
+            font-size: 36px;
+            font-weight: bold;
+            color: #2c7be5;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 8px;
+            margin: 10px 0;
+        }
+        
+        .code-label {
+            font-size: 14px;
+            color: #6c757d;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .expiry-notice {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .security-notice {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #721c24;
+        }
+        
+        .footer {
+            background-color: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 0 10px;
+            }
+            
+            .content, .header, .footer {
+                padding: 20px;
+            }
+            
+            .code {
+                font-size: 28px;
+                letter-spacing: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🔐 AFRICASA</div>
+            <div class="subtitle">Code de vérification sécurisé</div>
+        </div>
+        
+        <div class="content">
+            <h1 class="greeting">Bonjour {{fullName}} !</h1>
+            
+            <div class="message">
+                <p>Vous tentez de vous connecter à votre compte AFRICASA. Pour des raisons de sécurité, veuillez utiliser le code de vérification ci-dessous :</p>
+            </div>
+            
+            <div class="code-container">
+                <div class="code-label">Votre code de vérification</div>
+                <div class="code">{{code}}</div>
+            </div>
+            
+            <div class="expiry-notice">
+                <strong>⏰ Important :</strong> Ce code expire dans {{expiryTime}}. Veuillez l'utiliser rapidement.
+            </div>
+            
+            <div class="security-notice">
+                <strong>🛡️ Sécurité :</strong> Si vous n'avez pas demandé ce code, ignorez cet email et contactez immédiatement notre support à <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.
+            </div>
+            
+            <div class="message">
+                <p>Pour votre sécurité, ne partagez jamais ce code avec qui que ce soit. Notre équipe ne vous demandera jamais votre code de vérification par email ou téléphone.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2024 AFRICASA. Tous droits réservés.</p>
+            <p>Ce message a été envoyé pour sécuriser votre compte.</p>
+            <p>Support : <a href="mailto:{{supportEmail}}">{{supportEmail}}</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,140 @@
+/* [project]/src/app/contact/styles.css [app-client] (css) */
+.form-as #sendmessage {
+  color: #c48d17;
+  border: 1px solid #c48d17;
+  display: none;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.form-as #errormessage {
+  color: red;
+  display: none;
+  border: 1px solid red;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.form-as #sendmessage.show, .form-as #errormessage.show, .form-as .show {
+  display: block;
+}
+
+.form-as .validation {
+  color: red;
+  display: none;
+  margin: 4px 0 20px;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.form-as label {
+  color: #000;
+  position: relative;
+}
+
+.form-as select.form-control-lg:not([size]):not([multiple]) {
+  height: 3.5rem;
+}
+
+.form-as .form-control {
+  border-radius: 0;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.form-as .form-control.form-control-a {
+  height: 3.5rem;
+}
+
+.form-as .form-control:focus {
+  box-shadow: none;
+  border-color: #c48d17;
+}
+
+.contact-form .error-message {
+  color: #fff;
+  background: #ed3c0d;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact-form .sent-message {
+  display: none;
+  color: #fff;
+  background: #c48d17;
+  text-align: center;
+  padding: 15px;
+  font-weight: 600;
+}
+
+.contact-form .loading {
+  display: none;
+  background: #fff;
+  text-align: center;
+  padding: 15px;
+}
+
+.contact-form .loading:before {
+  content: "";
+  display: inline-block;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  margin: 0 10px -6px 0;
+  border: 3px solid #c48d17;
+  border-top-color: #eee;
+  -webkit-animation: 1s linear infinite animate-loading;
+  animation: 1s linear infinite animate-loading;
+}
+
+.contact-form label {
+  color: #000;
+  position: relative;
+}
+
+.contact-form select.form-control-lg:not([size]):not([multiple]) {
+  height: 3.5rem;
+}
+
+.contact-form .form-control {
+  border-radius: 0;
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.contact-form .form-control.form-control-a {
+  height: 3.5rem;
+}
+
+.contact-form .form-control:focus {
+  box-shadow: none;
+  border-radius: #c48d17;
+}
+
+@-webkit-keyframes animate-loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/*# sourceMappingURL=src_app_contact_styles_2bbb91.css.map*/

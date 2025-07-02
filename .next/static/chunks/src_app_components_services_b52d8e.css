@@ -1,0 +1,86 @@
+/* [project]/src/app/components/services.css [app-client] (css) */
+.card-box-c {
+  position: relative;
+}
+
+@media (width <= 767px) {
+  .card-box-c {
+    margin-bottom: 2rem;
+  }
+}
+
+.card-header-c {
+  padding: 0 1rem 1rem;
+}
+
+.card-body-c {
+  padding: .5rem .5rem 0;
+}
+
+@media (width <= 767px) {
+  .card-body-c {
+    padding: 0;
+  }
+}
+
+.card-footer-c {
+  padding-left: .5rem;
+}
+
+.card-box-ico {
+  padding: 1rem 3rem 1rem 2.5rem;
+  border: 5px solid #c48d17;
+}
+
+.card-box-ico span {
+  font-size: 4rem;
+  color: #000;
+}
+
+.title-c {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-left: -40px;
+}
+
+@media (width >= 768px) {
+  .title-c {
+    font-size: 1.8rem;
+  }
+}
+
+@media (width >= 992px) {
+  .title-c {
+    font-size: 2.5rem;
+  }
+}
+
+.link-c {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+  border: 5px solid #c48d17;
+  background-color: #0000;
+  color: #000;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.link-c:hover {
+  background-color: #c48d17;
+  color: #fff;
+}
+
+.link-icon {
+  display: flex;
+  align-items: center;
+}
+
+.bi-chevron-right {
+  margin-left: .5rem;
+}
+
+/*# sourceMappingURL=src_app_components_services_b52d8e.css.map*/

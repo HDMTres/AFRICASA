@@ -1,0 +1,171 @@
+/* [project]/src/app/properties/styles.css [app-ssr] (css) */
+.property-grid .grid-option {
+  text-align: right;
+  margin-bottom: 2rem;
+}
+
+.property-grid .grid-option .custom-select {
+  border-radius: 0;
+  width: 200px;
+  border-color: #313131;
+}
+
+.property-grid .grid-option .custom-select:hover, .property-grid .grid-option .custom-select:active, .property-grid .grid-option .custom-select:focus {
+  border-color: #313131;
+}
+
+.property-grid .grid-option .custom-select option {
+  border-color: #313131;
+}
+
+
+/* [project]/src/app/components/propertyCard.css [app-ssr] (css) */
+@media (width >= 768px) {
+  .card-box-a:hover .card-overlay-a-content {
+    bottom: 60px;
+  }
+}
+
+@media (width >= 768px) and (width >= 768px) {
+  .card-box-a:hover .card-overlay-a-content {
+    bottom: 60px;
+  }
+}
+
+@media (width >= 768px) and (width >= 992px) {
+  .card-box-a:hover .card-overlay-a-content {
+    bottom: 64px;
+  }
+}
+
+@media (width >= 768px) {
+  .card-box-a:hover .card-body-a {
+    padding-bottom: 1rem;
+  }
+}
+
+@media (width <= 767px) {
+  .card-box-a .card-overlay-a-content {
+    bottom: 65px;
+  }
+
+  .card-box-a .card-body-a {
+    padding-bottom: 1rem;
+  }
+}
+
+.card-overlay-a-content {
+  transition: all .5s ease-in;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  z-index: 2;
+}
+
+@media (width >= 768px) {
+  .card-overlay-a-content {
+    bottom: -20px;
+  }
+}
+
+@media (width >= 992px) {
+  .card-overlay-a-content {
+    bottom: 0;
+  }
+}
+
+.card-header-a {
+  padding: 0 1rem;
+}
+
+.card-header-a .card-title-a {
+  color: #fff;
+  margin-bottom: 0;
+  padding-bottom: .7rem;
+}
+
+@media (width >= 768px) {
+  .card-header-a .card-title-a {
+    font-size: 1.3rem;
+  }
+}
+
+@media (width >= 992px) {
+  .card-header-a .card-title-a {
+    font-size: 2rem;
+  }
+}
+
+.card-header-a .card-title-a a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.card-body-a {
+  z-index: 2;
+  transition: all .5s ease-in;
+  padding: 0 1rem 2rem !important;
+}
+
+.card-body-a .price-box {
+  padding-bottom: .5rem;
+}
+
+.price-a {
+  color: #fff;
+  padding: .6rem .8rem;
+  border: 2px solid #c48d17;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: .03em;
+}
+
+.card-footer-a {
+  width: 100%;
+  position: absolute;
+  z-index: 2;
+  background-color: #c48d17;
+}
+
+.card-info {
+  list-style: none;
+  margin-bottom: 0;
+  padding: .5rem 0;
+}
+
+.card-info .card-info-title {
+  font-size: 1rem;
+  color: #313131;
+}
+
+@media (width >= 768px) {
+  .card-info .card-info-title {
+    font-size: .9rem;
+  }
+}
+
+@media (width >= 992px) {
+  .card-info .card-info-title {
+    font-size: 1rem;
+  }
+}
+
+.card-info li span {
+  color: #fff;
+  font-size: .9rem;
+}
+
+@media (width >= 768px) {
+  .card-info li span {
+    font-size: .8rem;
+  }
+}
+
+@media (width >= 992px) {
+  .card-info li span {
+    font-size: .9rem;
+  }
+}
+
+
+/*# sourceMappingURL=src_app_d5184e._.css.map*/

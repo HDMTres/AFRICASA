@@ -9,7 +9,6 @@ function HeroSlide({ slide }) {
         // Création d'un élément de diaporama avec une image de fond.
         <div className='carousel-item-a intro-item bg-image'
             style={{ backgroundImage: `url(${slide.bgImg})` }}>
-            <div className="overlay overlay-a"></div> // Ajout d'un calque superposé pour améliorer la lisibilité du texte.
             <div className="intro-content display-table">
                 <div className="table-cell">
                     <div className="container">
@@ -33,6 +32,18 @@ function HeroSlide({ slide }) {
                                             </span>
                                         </Link>
                                     </p>
+                                    
+                                    {/* Boutons d'action pour navigation */}
+                                    <div className="intro-actions mt-4">
+                                        <Link href="/dashboard" className="btn btn-primary me-3">
+                                            <i className="fas fa-tachometer-alt me-2"></i>
+                                            Accéder au Dashboard
+                                        </Link>
+                                        <Link href="/properties" className="btn btn-outline-light">
+                                            <i className="fas fa-search me-2"></i>
+                                            Voir les Propriétés
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         </div>

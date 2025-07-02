@@ -2,10 +2,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 import { Poppins } from "next/font/google";
-import Nav from './components/Nav';
-import SearchForm from './components/SearchForm';
-import Footer from './components/Footer';
-import BackToTopBtn from './components/BackToTopBtn';
+import ConditionalLayout from './components/ConditionalLayout';
+import './styles/africasa-design-system.css';
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -25,13 +23,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr" suppressHydrationWarning={true}>
       <body className={poppins.className}>
-        <SearchForm />
-        <Nav />
-
-        {children}
-
-        <Footer />
-        <BackToTopBtn />
+        <ConditionalLayout>
+          {children}
+        </ConditionalLayout>
         <script
           src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"
           integrity="sha512-X/YkDZyjTf4wyc2Vy16YGCPHwAY8rZJY+POgokZjQB2mhIRFJCckEGc6YyX9eNsPfn0PzThEuNs+uaomE5CO6A=="

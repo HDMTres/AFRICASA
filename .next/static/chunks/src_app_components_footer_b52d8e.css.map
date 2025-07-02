@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/app/components/footer.css"],"sourcesContent":[".section-footer {\r\n    padding-top: 60px;\r\n    margin-top: 60px;\r\n    background: #f3f3f3;\r\n}\r\n\r\n.section-footer ul {\r\n    line-height: 2;\r\n}\r\n\r\n.section-footer .item-list-a i {\r\n    font-size: 18px;\r\n    padding-right: 4px;\r\n    color: #c48d17;\r\n}\r\n\r\n.section-footer .widget-a .w-title-a {\r\n    margin-bottom: 1rem;\r\n}\r\n\r\nfooter {\r\n    background: #f3f3f3;\r\n    text-align: center;\r\n    padding: 30px 0;\r\n}\r\n\r\nfooter .copyright-footer {\r\n    border-top: 1px solid #ddd;\r\n    padding-top: 20px;\r\n}\r\n\r\nfooter .credits {\r\n    font-size: 14px;\r\n}\r\n\r\n\r\n"],"names":[],"mappings":"AAAA;;;;;;AAMA;;;;AAIA;;;;;;AAMA;;;;AAIA;;;;;;AAMA;;;;;AAKA"}},
+    {"offset": {"line": 35, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

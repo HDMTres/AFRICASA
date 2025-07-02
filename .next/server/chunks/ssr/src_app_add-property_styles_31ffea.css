@@ -1,0 +1,105 @@
+/* [project]/src/app/add-property/styles.css [app-ssr] (css) */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Poppins, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: url("/assets/safari.jpg");
+  background-size: cover;
+  background-position: center;
+  color: #fff;
+}
+
+.add-property-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 30px 40px;
+  background: none;
+  border: 2px solid #fff3;
+  backdrop-filter: blur(30px);
+  box-shadow: 0 0 10px #0003;
+  border-radius: 10px;
+}
+
+.add-property-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 36px;
+}
+
+.add-property-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.form-section {
+  flex: 0 0 48%;
+  background: #ffffff1a;
+  padding: 20px;
+  border: 2px solid #fff3;
+  border-radius: 10px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #fffc;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff3;
+  color: #fff;
+}
+
+.form-group input[type="file"] {
+  padding: 0;
+  background: none;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 15px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 30px auto 0;
+  display: block;
+  width: 50%;
+  text-align: center;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+/*# sourceMappingURL=src_app_add-property_styles_31ffea.css.map*/

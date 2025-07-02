@@ -1,0 +1,117 @@
+/* [project]/src/app/components/searchForm.css [app-ssr] (css) */
+.box-collapse {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1040;
+  background-color: #fff;
+  transform: translateX(100%);
+  transition: all .6s;
+}
+
+@media (width >= 768px) {
+  .box-collapse {
+    width: 50%;
+  }
+}
+
+.box-collapse .title-box-d {
+  top: 30px;
+  left: 60px;
+  opacity: 0;
+  transition: all 1s;
+  transition-delay: .3s;
+}
+
+@media (width <= 575px) {
+  .box-collapse .title-box-d {
+    left: 35px;
+  }
+}
+
+@media (width <= 575px) {
+  .box-collapse .title-box-d .title-d {
+    font-size: 1.3rem;
+  }
+}
+
+.box-collapse-wrap {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 6.5rem;
+  bottom: 5rem;
+  padding-left: 10%;
+  padding-right: 10%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0;
+  transform: translateY(3rem);
+  transition: transform .5s .5s, opacity .5s .5s;
+}
+
+.box-collapse-open .click-closed {
+  visibility: visible;
+}
+
+.box-collapse-open .box-collapse {
+  transform: translateX(0);
+  box-shadow: 0 0 65px #00000012;
+  opacity: 1;
+}
+
+.box-collapse-open .box-collapse .title-box-d {
+  transform: translate(0);
+  opacity: 1;
+}
+
+.box-collapse-open .box-collapse-wrap {
+  transform: translate(0);
+  opacity: 1;
+}
+
+.box-collapse-closed .box-collapse {
+  opacity: .7;
+  transition-delay: 0s;
+}
+
+.box-collapse-closed .box-collapse .title-box-d {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+.box-collapse-closed .box-collapse .form-a {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+.click-closed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  z-index: 1035;
+  background-color: #000;
+  opacity: .4;
+}
+
+.close-box-collapse {
+  position: absolute;
+  z-index: 1050;
+  top: 2rem;
+  font-size: 3.5rem;
+  line-height: 1;
+  color: #000;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+.right-boxed {
+  right: 4.2857rem;
+}
+
+/*# sourceMappingURL=src_app_components_searchForm_31ffea.css.map*/

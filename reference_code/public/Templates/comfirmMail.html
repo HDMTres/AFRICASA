@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vérification d'Email</title>
+    <style>
+      /* Styles de base pour la responsivité */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f9f9f9;
+        padding: 20px;
+        color: #333;
+        line-height: 1.6;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .email-header {
+        background-color: #8b5cf6;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .email-header img {
+        width: 60px;
+        height: 60px;
+      }
+
+      .email-header h1 {
+        color: white;
+        margin-top: 15px;
+        font-size: 24px;
+      }
+
+      .email-body {
+        padding: 30px 25px;
+      }
+
+      .greeting {
+        font-size: 18px;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .message {
+        margin-bottom: 30px;
+        color: #555;
+      }
+
+      .verification-link {
+        text-align: center;
+        margin: 30px 0;
+      }
+
+      .button {
+        display: inline-block;
+        background-color: #8b5cf6;
+        color: white;
+        text-decoration: none;
+        padding: 14px 30px;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+
+      .button:hover {
+        background-color: #7c4bf1;
+      }
+
+      .fallback {
+        margin-top: 25px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 6px;
+        border: 1px solid #e9ecef;
+      }
+
+      .fallback p {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .link {
+        word-break: break-all;
+        color: #8b5cf6;
+        font-size: 14px;
+      }
+
+      .email-footer {
+        background-color: #f8f9fa;
+        padding: 20px;
+        text-align: center;
+        font-size: 13px;
+        color: #888;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .social-links {
+        margin: 15px 0;
+      }
+
+      .social-icon {
+        display: inline-block;
+        margin: 0 10px;
+      }
+
+      .help-text {
+        margin-top: 15px;
+        font-size: 13px;
+      }
+
+      /* Styles responsifs */
+      @media only screen and (max-width: 480px) {
+        .email-container {
+          width: 100%;
+        }
+
+        .email-header {
+          padding: 20px 15px;
+        }
+
+        .email-header h1 {
+          font-size: 22px;
+        }
+
+        .email-body {
+          padding: 20px 15px;
+        }
+
+        .button {
+          display: block;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <svg
+          width="60"
+          height="60"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            width="20"
+            height="16"
+            x="2"
+            y="4"
+            rx="2"
+            fill="white"
+            opacity="0.2"
+          />
+          <path
+            d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <h1>Vérification de votre adresse email</h1>
+      </div>
+
+      <div class="email-body">
+        <p class="greeting">Bonjour, {{fulname}}</p>
+
+        <p class="message">
+          Merci de vous être inscrit. Pour compléter votre inscription et
+          vérifier votre adresse email, veuillez cliquer sur le bouton
+          ci-dessous :
+        </p>
+
+        <div class="verification-link">
+          <a href="{{confirmmailurl}}" class="button" id="verify-button">
+            Vérifier mon adresse email
+          </a>
+        </div>
+
+        <div class="fallback">
+          <p>
+            Si le bouton ne fonctionne pas, veuillez copier et coller le lien
+            suivant dans votre navigateur :
+          </p>
+          <a href="{{confirmmailurl}}" class="link"> {{confirmmailurl}} </a>
+        </div>
+
+        <p class="help-text">
+          Si vous n'avez pas demandé cette vérification, vous pouvez ignorer cet
+          email.
+        </p>
+      </div>
+
+      <div class="email-footer">
+        <p>© 2025 PSP_APP. Tous droits réservés.</p>
+        <p>Yaounde Centre Cameroun, Poste Central, Cameroun</p>
+      </div>
+    </div>
+  </body>
+</html>

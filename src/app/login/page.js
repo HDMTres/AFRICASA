@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaHome, FaExclamationTriangle, FaGoogle, FaFacebookF, FaCheck } from 'react-icons/fa';
 import { MdSecurity, MdDashboard, MdLocationSearching } from 'react-icons/md';
-import NoNavLayout from '../components/NoNavLayout';
 
 const Login = () => {
     const [email, setEmail] = useState(''); // Changé de username à email
@@ -88,28 +87,9 @@ const Login = () => {
     };
     
     return (
-        <NoNavLayout>
-            <section className="auth-container">
-                {/* Sidebar informatif (visible sur desktop uniquement) */}
-                <div className="auth-sidebar">
-                    <div className="auth-sidebar-pattern"></div>
-                    <div className="auth-sidebar-overlay"></div>
-                    <div className="auth-sidebar-content">
-                        <div className="auth-sidebar-logo">AFRICASA</div>
-                        <div className="auth-sidebar-text">
-                            <h2>Bienvenue sur la plateforme immobilière de référence en Afrique</h2>
-                            <p>Connectez-vous pour découvrir des propriétés exclusives et gérer vos annonces immobilières.</p>
-                        </div>
-                        <ul className="auth-feature-list">
-                            <li><MdSecurity size={20} /> Transactions sécurisées et fiables</li>
-                            <li><MdDashboard size={20} /> Tableau de bord personnalisé</li>
-                            <li><MdLocationSearching size={20} /> Recherche avancée de biens immobiliers</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                {/* Contenu principal du formulaire */}
-                <div className="auth-main">
+        <section className="auth-container-simple">
+                {/* Contenu principal du formulaire - centré */}
+                <div className="auth-main-centered">
                     <div className="auth-card">
                         <div className="auth-header">
                             <div className="brand-logo">
@@ -222,7 +202,6 @@ const Login = () => {
                     </div>
                 </div>
             </section>
-        </NoNavLayout>
     );
 };
 

@@ -2,7 +2,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { Poppins, Montserrat } from "next/font/google";
-import '../styles/auth.css';
+import '../styles/africasa-design-system.css';
 
 const poppins = Poppins({
   subsets: ["latin"],

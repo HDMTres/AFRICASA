@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { FaUser, FaLock, FaEnvelope, FaPhone, FaMapMarkerAlt, FaEye, FaEyeSlash, FaHome, FaUserTie, FaExclamationTriangle } from 'react-icons/fa';
 import { MdPublishedWithChanges, MdHouse, MdSearch } from 'react-icons/md';
-import NoNavLayout from '../components/NoNavLayout';
 
 const Signup = () => {
     const [formData, setFormData] = useState({
@@ -158,28 +157,9 @@ const Signup = () => {
     };
 
     return (
-        <NoNavLayout>
-            <section className="auth-container">
-                {/* Sidebar informatif (visible sur desktop uniquement) */}
-                <div className="auth-sidebar">
-                    <div className="auth-sidebar-pattern"></div>
-                    <div className="auth-sidebar-overlay"></div>
-                    <div className="auth-sidebar-content">
-                        <div className="auth-sidebar-logo">AFRICASA</div>
-                        <div className="auth-sidebar-text">
-                            <h2>Rejoignez la communauté immobilière africaine</h2>
-                            <p>Créez votre compte pour accéder à des services immobiliers exclusifs et personnalisés.</p>
-                        </div>
-                        <ul className="auth-feature-list">
-                            <li><MdPublishedWithChanges size={20} /> Publication d'annonces immobilières</li>
-                            <li><MdHouse size={20} /> Accès à des propriétés exclusives</li>
-                            <li><MdSearch size={20} /> Recherche immobilière avancée</li>
-                        </ul>
-                    </div>
-                </div>
-                
-                {/* Contenu principal du formulaire */}
-                <div className="auth-main">
+        <section className="auth-container-simple">
+                {/* Contenu principal du formulaire - centré */}
+                <div className="auth-main-centered">
                     <div className="auth-card">
                         <div className="auth-header">
                             <div className="brand-logo">
@@ -428,7 +408,6 @@ const Signup = () => {
                     </div>
                 </div>
             </section>
-        </NoNavLayout>
     );
 };
 

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/app/properties/styles.css"],"sourcesContent":[".property-grid .grid-option {\r\n    text-align: right;\r\n    margin-bottom: 2rem;\r\n}\r\n\r\n.property-grid .grid-option .custom-select {\r\n    border-radius: 0;\r\n    width: 200px;\r\n    border-color: #313131;\r\n}\r\n\r\n.property-grid .grid-option .custom-select:hover,\r\n.property-grid .grid-option .custom-select:active,\r\n.property-grid .grid-option .custom-select:focus {\r\n    border-color: #313131;\r\n}\r\n\r\n.property-grid .grid-option .custom-select option {\r\n    border-color: #313131;\r\n}"],"names":[],"mappings":"AAAA;;;;;AAKA;;;;;;AAMA;;;;AAMA"}},
+    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

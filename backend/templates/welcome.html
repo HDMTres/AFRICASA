@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenue sur AFRICASA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c7be5 0%, #1a68d1 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .greeting {
+            font-size: 24px;
+            color: #2c7be5;
+            margin-bottom: 20px;
+        }
+        
+        .message {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            color: #555;
+        }
+        
+        .features {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+        
+        .features h3 {
+            color: #2c7be5;
+            margin-bottom: 15px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .feature-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #2c7be5 0%, #1a68d1 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            transition: transform 0.2s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background-color: #f8f9fa;
+            padding: 25px 30px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #2c7be5;
+            text-decoration: none;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                margin: 0 10px;
+            }
+            
+            .content, .header, .footer {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">AFRICASA</div>
+            <div class="subtitle">Votre partenaire immobilier de confiance</div>
+        </div>
+        
+        <div class="content">
+            <h1 class="greeting">Bienvenue {{fullName}} !</h1>
+            
+            <div class="message">
+                <p>Nous sommes ravis de vous accueillir dans la communauté AFRICASA, la plateforme immobilière de référence qui révolutionne la façon dont vous trouvez et gérez vos biens immobiliers.</p>
+                
+                <p>Votre compte a été créé avec succès pour l'adresse email : <strong>{{email}}</strong></p>
+            </div>
+            
+            <div class="features">
+                <h3>Découvrez ce que vous pouvez faire avec AFRICASA :</h3>
+                <ul class="feature-list">
+                    <li>Parcourir des milliers de propriétés vérifiées</li>
+                    <li>Utiliser nos outils de recherche avancés</li>
+                    <li>Contacter directement nos agents certifiés</li>
+                    <li>Programmer des visites en ligne</li>
+                    <li>Accéder à des analyses de marché exclusives</li>
+                    <li>Recevoir des alertes personnalisées</li>
+                </ul>
+            </div>
+            
+            <div style="text-align: center;">
+                <a href="{{loginUrl}}" class="cta-button">Commencer l'exploration</a>
+            </div>
+            
+            <div class="message">
+                <p>Si vous avez des questions ou avez besoin d'assistance, notre équipe de support est là pour vous aider. N'hésitez pas à nous contacter à <a href="mailto:{{supportEmail}}">{{supportEmail}}</a>.</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="social-links">
+                <a href="#" style="margin-right: 15px;">Facebook</a>
+                <a href="#" style="margin-right: 15px;">Twitter</a>
+                <a href="#" style="margin-right: 15px;">LinkedIn</a>
+                <a href="#">Instagram</a>
+            </div>
+            
+            <p>&copy; 2024 AFRICASA. Tous droits réservés.</p>
+            <p>Vous recevez ce message car vous avez créé un compte sur notre plateforme.</p>
+        </div>
+    </div>
+</body>
+</html>

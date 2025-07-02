@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["[project]/src/app/components/backToTopBtn.css"],"sourcesContent":[".back-to-top {\r\n    position: fixed;\r\n    visibility: hidden;\r\n    opacity: 0;\r\n    right: 15px;\r\n    bottom: 15px;\r\n    z-index: 999;\r\n    background: #ca792e;\r\n    width: 40px;\r\n    height: 40px;\r\n    border-radius: 50px;\r\n    transition: all .4s;\r\n    cursor: pointer;\r\n}\r\n\r\n.back-to-top i {\r\n    font-size: 28px;\r\n    color: #fff;\r\n    line-height: 0;\r\n}\r\n\r\n.back-to-top:hover {\r\n    background: #4bd680;\r\n    color: #fff;\r\n}\r\n\r\n.back-to-top.active {\r\n    visibility: visible;\r\n    opacity: 1;\r\n}\r\n\r\n\r\n\r\n"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;;;AAeA;;;;;;AAMA;;;;;AAKA"}},
+    {"offset": {"line": 31, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
