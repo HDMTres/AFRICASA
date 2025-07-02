@@ -1,0 +1,12 @@
+hub_rg_name = "rg-hub"
+location = "francecentral"
+app_vnet_name = "vnet-app"
+app_address_space = "10.0.1.0/24"
+web_public_ip_name = "ip-app"
+nic_web_name = "nic-app"
+web_vm_name = "vm-app"
+web_vm_size = "Standard_B1s"  # 4 vCPUs, 16 GiB memory       Standard_D4S_v3
+web_admin_username = "userafricasa"
+public_key_path = "~/.ssh/id_rsa.pub"
+vnet_hub_name = "vnet-hub"
+app_rg_name = "rg-app"
