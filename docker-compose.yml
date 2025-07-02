@@ -1,0 +1,65 @@
+services:
+  # Base de données MongoDB (utilise votre container existant)
+  mongodb:
+    image: mongo:latest
+    container_name: africasa-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: africasa2024
+      MONGO_INITDB_DATABASE: africasa
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - africasa-network
+    restart: unless-stopped
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: africasa-backend
+    environment:
+      NODE_ENV: production
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:africasa2024@mongodb:27017/africasa?authSource=admin
+      JWT_SECRET: africasa-super-secret-jwt-key-2024
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongodb
+    networks:
+      - africasa-network
+    restart: unless-stopped
+    volumes:
+      - backend_uploads:/app/uploads
+
+  # Frontend Next.js
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: africasa-frontend
+    environment:
+      NODE_ENV: production
+      NEXT_PUBLIC_API_URL: http://localhost:5000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - africasa-network
+    restart: unless-stopped
+
+volumes:
+  mongodb_data:
+    driver: local
+  backend_uploads:
+    driver: local
+
+networks:
+  africasa-network:
+    driver: bridge
