@@ -100,3 +100,6 @@
 {"timestamp":"2025-07-03T12:33:39.307Z","level":"WARN","message":"Tentative d'inscription avec email/téléphone existant","type":"auth","email":"loicsteve@gmail.com","phoneNumber":"+237766237454","ip":"::ffff:172.18.0.1"}
 {"timestamp":"2025-07-03T12:33:50.581Z","level":"WARN","message":"Tentative d'inscription avec email/téléphone existant","type":"auth","email":"loicsteve2@gmail.com","phoneNumber":"+237766237454","ip":"::ffff:172.18.0.1"}
 {"timestamp":"2025-07-03T12:34:08.836Z","level":"INFO","message":"Connexion réussie","type":"auth","action":"login_success","userId":"686678bb04c7c1dab1fe67b2","email":"loicsteve2@gmail.com","ip":"::ffff:172.18.0.1"}
+{"timestamp":"2025-07-03T12:44:04.357Z","level":"INFO","message":"Connexion réussie","type":"auth","action":"login_success","userId":"686678bb04c7c1dab1fe67b2","email":"loicsteve2@gmail.com","ip":"::ffff:172.18.0.1"}
+{"timestamp":"2025-07-03T13:46:31.878Z","level":"INFO","message":"Connexion réussie","type":"auth","action":"login_success","userId":"686678bb04c7c1dab1fe67b2","email":"loicsteve2@gmail.com","ip":"::ffff:172.18.0.1"}
+{"timestamp":"2025-07-03T13:47:34.724Z","level":"INFO","message":"Connexion réussie","type":"auth","action":"login_success","userId":"686689edda49055dec3b8753","email":"jordy-corsi@gmail.com","ip":"::ffff:172.18.0.1"}
