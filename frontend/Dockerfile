@@ -16,6 +16,9 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+# Copier le fichier d'environnement Docker (si il existe)
+RUN if [ -f .env.docker ]; then cp .env.docker .env.production; fi
+
 # Désactiver la télémétrie Next.js pendant le build
 ENV NEXT_TELEMETRY_DISABLED 1
 

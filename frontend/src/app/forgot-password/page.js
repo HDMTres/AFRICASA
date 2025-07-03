@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaEnvelope, FaArrowLeft, FaHome, FaCheck, FaExclamationTriangle } from 'react-icons/fa';
 import NoNavLayout from '../components/NoNavLayout';
+import API_ENDPOINTS from '../config/api';
 
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
@@ -27,7 +28,7 @@ const ForgotPassword = () => {
         }
 
         try {
-            const response = await fetch('http://127.0.0.1:8080/users/forgot-password', {
+            const response = await fetch(API_ENDPOINTS.FORGOT_PASSWORD, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email })

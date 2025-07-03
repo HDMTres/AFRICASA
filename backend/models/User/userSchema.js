@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: [true, 'Le mot de passe est requis'],
-    minLength: [8, 'Le mot de passe doit contenir au moins 8 caractères']
+    minLength: process.env.NODE_ENV === 'development' ? [3, 'Le mot de passe doit contenir au moins 3 caractères'] : [8, 'Le mot de passe doit contenir au moins 8 caractères']
   },
 
   phoneNumber: {

@@ -1,12 +1,8 @@
 services:
-  # Base de données MongoDB (utilise votre container existant)
+  # Base de données MongoDB (sans authentification pour les tests)
   mongodb:
     image: mongo:latest
-    container_name: africasa-mongodb-1
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: africasa2024
-      MONGO_INITDB_DATABASE: africasa
+    container_name: africasa-mongodb-compose
     ports:
       - "27017:27017"
     volumes:
@@ -22,11 +18,14 @@ services:
       dockerfile: Dockerfile
     container_name: africasa-backend
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
       PORT: 5000
-      MONGODB_URI: mongodb://admin:africasa2024@mongodb:27017/africasa?authSource=admin
+      MONGODB_URI: mongodb://mongodb:27017/africasa
       JWT_SECRET: africasa-super-secret-jwt-key-2024
-      FRONTEND_URL: http://localhost:3000
+      FRONTEND_URL: http://frontend:3000
+      SKIP_EMAIL_VERIFICATION: "true"
+      # Ajout de variables pour le debugging
+      DEBUG: "true"
     ports:
       - "5000:5000"
     depends_on:
@@ -36,6 +35,12 @@ services:
     restart: unless-stopped
     volumes:
       - backend_uploads:/app/uploads
+      - ./backend/logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   # Frontend Next.js
   frontend:
@@ -44,7 +49,8 @@ services:
       dockerfile: Dockerfile
     container_name: africasa-frontend
     environment:
-      NODE_ENV: production
+      NODE_ENV: development
+      # CORRECTION: Pour accès depuis le navigateur (côté client)
       NEXT_PUBLIC_API_URL: http://localhost:5000/api
     ports:
       - "3000:3000"

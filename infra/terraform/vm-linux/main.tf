@@ -43,11 +43,6 @@ resource "azurerm_network_interface" "nic_web" {
 
 }
 
-resource "azurerm_subnet_network_security_group_association" "nic_nsg_assoc" {
-  subnet_id = azurerm_subnet.app_subnet.id
-  network_security_group_id = azurerm_network_security_group.web_nsg.id
-  
-}
 
 resource "azurerm_linux_virtual_machine" "web_server" {
   name                = var.web_vm_name
@@ -76,3 +71,10 @@ resource "azurerm_linux_virtual_machine" "web_server" {
     version   = "latest"
   }
 }
+
+
+#resource "azurerm_subnet_network_security_group_association" "nic_nsg_assoc" {
+#  subnet_id = azurerm_subnet.app_subnet.id
+#  network_security_group_id = azurerm_network_security_group.web_nsg.id
+#
+#}

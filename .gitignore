@@ -13,6 +13,20 @@ out/
 dist/
 build/
 
+# Terraform state files
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+.terraform.tfstate.lock.info
+terraform.tfstate
+terraform.tfstate.backup
+terraform/**/*.tfstate
+terraform/**/*.tfstate.*
+terraform/**/.terraform.tfstate.lock.info
+terraform/**/terraform.tfstate
+terraform/**/terraform.tfstate.backup
+terraform/**/.terraform**
+
 # Environment variables
 .env
 .env.local
