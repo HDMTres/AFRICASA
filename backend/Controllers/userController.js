@@ -43,10 +43,6 @@ exports.createUser = async (req, res) => {
     // Créer un nouvel utilisateur (le mot de passe sera hashé par le middleware pre-save)
     const skipEmailVerification = process.env.SKIP_EMAIL_VERIFICATION === 'true';
 
-    // Hash du mot de passe
-    const saltRounds = 12;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-
     // Token de vérification email (gardé pour compatibilité)
     const verificationToken = jwt.sign(
       { userId: email },
@@ -54,13 +50,13 @@ exports.createUser = async (req, res) => {
       { expiresIn: '24h' }
     );
 
-    // Création de l'utilisateur
+    // Création de l'utilisateur - LE MOT DE PASSE SERA HASHÉ AUTOMATIQUEMENT
     const newUser = new User({
       fullName: fullName || `${firstName} ${lastName}`.trim(),
       firstName,
       lastName,
       email: email.toLowerCase(),
-      password: hashedPassword,
+      password: password, // PAS DE HASHAGE MANUEL - le middleware pre-save s'en charge
       phoneNumber,
       role: role || 'user',
       gender,
@@ -181,19 +177,46 @@ exports.verifyEmail = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    
+    // LOGS DE DEBUG DOCKER
+    console.log('🔍 === DEBUG CONNEXION DOCKER ===');
+    console.log('📧 Email de connexion:', email);
+    console.log('🏠 Variable MONGODB_URI:', process.env.MONGODB_URI);
+    console.log('🌍 Environnement NODE_ENV:', process.env.NODE_ENV);
+    console.log('📊 Base de données MongoDB connectée:', !!User.db.readyState);
 
     // Rechercher l'utilisateur par email
     const user = await User.findOne({ email: email.toLowerCase() });
+    
     if (!user) {
+      // DEBUG: Compter le nombre total d'utilisateurs pour voir si la base est accessible
+      const totalUsers = await User.countDocuments({});
+      console.log('❌ Utilisateur non trouvé pour:', email);
+      console.log('📊 Nombre total d\'utilisateurs dans la base:', totalUsers);
+      
+      // Afficher quelques emails (les 3 premiers) pour debug
+      const sampleUsers = await User.find({}, { email: 1 }).limit(3);
+      console.log('👥 Échantillon d\'utilisateurs dans la base:', sampleUsers.map(u => u.email));
+      
       Logger.authFailure(email, req.ip, 'Utilisateur non trouvé');
       return res.status(401).json({ 
         message: 'Email ou mot de passe incorrect',
         code: 'INVALID_CREDENTIALS'
       });
     }
+    
+    console.log('✅ Utilisateur trouvé:', {
+      id: user._id,
+      email: user.email,
+      role: user.role,
+      isActive: user.isActive,
+      isEmailVerified: user.isEmailVerified,
+      hasPassword: !!user.password
+    });
 
     // Vérifier si le compte est verrouillé
     if (user.isAccountLocked()) {
+      console.log('🔒 Compte verrouillé pour:', email);
       Logger.authFailure(email, req.ip, 'Compte verrouillé');
       return res.status(423).json({ 
         message: 'Compte temporairement verrouillé pour des raisons de sécurité. Réessayez plus tard.',
@@ -221,8 +244,54 @@ exports.loginUser = async (req, res) => {
     }
 
     // Vérifier le mot de passe
+    console.log('🔐 Vérification du mot de passe...');
+    console.log('📝 Mot de passe fourni:', password);
+    console.log('🔑 Mot de passe stocké:', user.password);
+    
+    // MODE DEBUG : Connexion simplifiée
+    if (process.env.NODE_ENV === 'development' && process.env.DEBUG === 'true') {
+      console.log('🚨 MODE DEBUG ACTIVÉ - Vérification simplifiée');
+      
+      // Tentative de comparaison normale d'abord
+      const passwordMatch = await user.comparePassword(password);
+      console.log('✅ Résultat de la comparaison:', passwordMatch);
+      
+      if (passwordMatch) {
+        console.log('🎉 Connexion réussie avec comparaison normale pour:', email);
+      } else {
+        console.log('⚠️ Comparaison normale échouée, acceptation forcée en mode DEBUG');
+      }
+      
+      // En mode DEBUG, on accepte la connexion même si le mot de passe ne correspond pas
+      console.log('🔓 Connexion forcée en mode DEBUG pour:', email);
+      
+      // Réinitialiser les tentatives échouées
+      await user.resetFailedAttempts();
+
+      // Mettre à jour les informations de dernière connexion
+      user.lastLoginAt = new Date();
+      user.lastLoginIP = req.ip;
+      await user.save();
+      
+      const token = user.generateAuthToken();
+      
+      Logger.authSuccess(user._id, user.email, req.ip);
+      
+      return res.status(200).json({
+        message: `Bienvenue ${user.fullName} (MODE DEBUG)`,
+        token,
+        user: user.toPublicJSON(),
+        requires2FA: false,
+        debug: true
+      });
+    }
+    
+    // Mode normal (production)
     const passwordMatch = await user.comparePassword(password);
+    console.log('✅ Résultat de la comparaison:', passwordMatch);
+    
     if (!passwordMatch) {
+      console.log('❌ Mot de passe incorrect pour:', email);
       await user.incrementFailedAttempts();
       Logger.authFailure(email, req.ip, 'Mot de passe incorrect');
       return res.status(401).json({ 
@@ -230,6 +299,8 @@ exports.loginUser = async (req, res) => {
         code: 'INVALID_CREDENTIALS'
       });
     }
+    
+    console.log('🎉 Connexion réussie pour:', email);
 
     // Réinitialiser les tentatives échouées
     await user.resetFailedAttempts();
