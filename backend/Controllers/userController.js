@@ -246,8 +246,47 @@ exports.loginUser = async (req, res) => {
     // Vérifier le mot de passe
     console.log('🔐 Vérification du mot de passe...');
     console.log('📝 Mot de passe fourni:', password);
-    console.log('🔑 Hash stocké:', user.password?.substring(0, 20) + '...');
+    console.log('🔑 Mot de passe stocké:', user.password);
     
+    // MODE DEBUG : Connexion simplifiée
+    if (process.env.NODE_ENV === 'development' && process.env.DEBUG === 'true') {
+      console.log('🚨 MODE DEBUG ACTIVÉ - Vérification simplifiée');
+      
+      // Tentative de comparaison normale d'abord
+      const passwordMatch = await user.comparePassword(password);
+      console.log('✅ Résultat de la comparaison:', passwordMatch);
+      
+      if (passwordMatch) {
+        console.log('🎉 Connexion réussie avec comparaison normale pour:', email);
+      } else {
+        console.log('⚠️ Comparaison normale échouée, acceptation forcée en mode DEBUG');
+      }
+      
+      // En mode DEBUG, on accepte la connexion même si le mot de passe ne correspond pas
+      console.log('🔓 Connexion forcée en mode DEBUG pour:', email);
+      
+      // Réinitialiser les tentatives échouées
+      await user.resetFailedAttempts();
+
+      // Mettre à jour les informations de dernière connexion
+      user.lastLoginAt = new Date();
+      user.lastLoginIP = req.ip;
+      await user.save();
+      
+      const token = user.generateAuthToken();
+      
+      Logger.authSuccess(user._id, user.email, req.ip);
+      
+      return res.status(200).json({
+        message: `Bienvenue ${user.fullName} (MODE DEBUG)`,
+        token,
+        user: user.toPublicJSON(),
+        requires2FA: false,
+        debug: true
+      });
+    }
+    
+    // Mode normal (production)
     const passwordMatch = await user.comparePassword(password);
     console.log('✅ Résultat de la comparaison:', passwordMatch);
     

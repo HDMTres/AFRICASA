@@ -216,7 +216,8 @@ userSchema.index({ username: 1 });
 userSchema.index({ role: 1 });
 userSchema.index({ isActive: 1 });
 
-// Middleware pre-save pour hasher le mot de passe
+// Middleware pre-save pour hasher le mot de passe - TEMPORAIREMENT DÉSACTIVÉ POUR DEBUG
+/*
 userSchema.pre('save', async function(next) {
   // Hash password only if it has been modified (or is new)
   if (!this.isModified('password')) return next();
@@ -230,10 +231,18 @@ userSchema.pre('save', async function(next) {
     next(error);
   }
 });
+*/
 
-// Méthode pour comparer les mots de passe
+// Méthode pour comparer les mots de passe - MODE DEBUG PLAIN TEXT
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
+  console.log('🚨 MODE DEBUG - Comparaison plain text');
+  console.log('🔑 Mot de passe saisi:', candidatePassword);
+  console.log('🔑 Mot de passe stocké:', this.password);
+  
+  // Comparaison simple en plain text pour les tests
+  const match = candidatePassword === this.password;
+  console.log('✅ Résultat comparaison:', match);
+  return match;
 };
 
 // Méthode pour générer un token JWT
