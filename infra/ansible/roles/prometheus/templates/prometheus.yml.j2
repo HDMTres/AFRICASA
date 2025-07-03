@@ -1,0 +1,153 @@
+global:
+  scrape_interval: {{ prometheus_scrape_interval | default('15s') }}
+  evaluation_interval: {{ prometheus_evaluation_interval | default('15s') }}
+  external_labels:
+    cluster: '{{ prometheus_cluster_name | default("africasa-cluster") }}'
+    region: '{{ prometheus_region | default("azure-west-europe") }}'
+
+rule_files:
+  - "{{ prometheus_config_dir }}/rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+{% if prometheus_alertmanager_targets is defined %}
+{% for target in prometheus_alertmanager_targets %}
+          - '{{ target }}'
+{% endfor %}
+{% else %}
+          # - alertmanager:9093
+{% endif %}
+
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+  # Node Exporter - Infrastructure monitoring
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+{% if hostvars[host]['ansible_default_ipv4'] is defined %}
+        - '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:9100'
+{% endif %}
+{% endfor %}
+    scrape_interval: 30s
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: '{{ ansible_default_ipv4.address }}:9100'
+      - source_labels: [__address__]
+        regex: '([^:]+):.*'
+        target_label: node_name
+        replacement: '${1}'
+
+  # cAdvisor - Container monitoring
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+{% if hostvars[host]['ansible_default_ipv4'] is defined %}
+        - '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:8080'
+{% endif %}
+{% endfor %}
+    scrape_interval: 30s
+    metrics_path: /metrics
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: '([^:]+):.*'
+        target_label: node_name
+        replacement: '${1}'
+      - target_label: job
+        replacement: 'cadvisor'
+
+  # Docker Daemon metrics (if enabled)
+  - job_name: 'docker'
+    static_configs:
+      - targets:
+{% for host in groups['all'] %}
+{% if hostvars[host]['ansible_default_ipv4'] is defined %}
+        - '{{ hostvars[host]['ansible_default_ipv4']['address'] }}:9323'
+{% endif %}
+{% endfor %}
+    scrape_interval: 30s
+    metrics_path: /metrics
+
+{% if prometheus_container_discovery_enabled | default(true) %}
+  # Container auto-discovery via file-based service discovery
+  - job_name: 'container_applications'
+    file_sd_configs:
+      - files:
+        - '{{ prometheus_config_dir }}/targets/*.json'
+        refresh_interval: 30s
+    relabel_configs:
+      - source_labels: [__meta_container_name]
+        target_label: container_name
+      - source_labels: [__meta_container_image]
+        target_label: container_image
+      - source_labels: [__meta_service_name]
+        target_label: service_name
+      - source_labels: [__meta_environment]
+        target_label: environment
+{% endif %}
+
+{% if prometheus_custom_jobs is defined %}
+  # Custom application jobs
+{% for job in prometheus_custom_jobs %}
+  - job_name: '{{ job.name }}'
+{% if job.static_configs is defined %}
+    static_configs:
+{% for config in job.static_configs %}
+      - targets:
+{% for target in config.targets %}
+        - '{{ target }}'
+{% endfor %}
+{% if config.labels is defined %}
+        labels:
+{% for key, value in config.labels.items() %}
+          {{ key }}: '{{ value }}'
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if job.file_sd_configs is defined %}
+    file_sd_configs:
+{% for config in job.file_sd_configs %}
+      - files:
+{% for file in config.files %}
+        - '{{ file }}'
+{% endfor %}
+        refresh_interval: {{ config.refresh_interval | default('30s') }}
+{% endfor %}
+{% endif %}
+{% if job.metrics_path is defined %}
+    metrics_path: '{{ job.metrics_path }}'
+{% endif %}
+{% if job.scrape_interval is defined %}
+    scrape_interval: '{{ job.scrape_interval }}'
+{% endif %}
+{% if job.relabel_configs is defined %}
+    relabel_configs:
+{% for config in job.relabel_configs %}
+      - source_labels: {{ config.source_labels | to_json }}
+{% if config.target_label is defined %}
+        target_label: {{ config.target_label }}
+{% endif %}
+{% if config.regex is defined %}
+        regex: '{{ config.regex }}'
+{% endif %}
+{% if config.replacement is defined %}
+        replacement: '{{ config.replacement }}'
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}

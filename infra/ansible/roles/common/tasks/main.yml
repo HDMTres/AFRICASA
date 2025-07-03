@@ -1,0 +1,80 @@
+---
+# tasks file for ./roles/common
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+
+- name: Install common packages
+  ansible.builtin.apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg
+      - lsb-release
+      - ufw
+      - htop
+      - git
+      - vim
+    state: present
+  become: true
+
+- name: Check if docker is already installed
+  ansible.builtin.command: docker --version
+  register: __docker_version_check
+  ignore_errors: true
+  changed_when: false
+
+- name: Add Docker GPG key
+  ansible.builtin.apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  become: true
+  when: __docker_version_check.rc != 0
+
+- name: Add Docker repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable"
+    state: present
+  become: true
+  when: __docker_version_check.rc != 0
+
+- name: Install Docker
+  ansible.builtin.apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-compose-plugin
+    state: present
+  become: true
+  when: __docker_version_check.rc != 0
+
+- name: Add user to the docker group
+  ansible.builtin.user:
+    name: "{{ ansible_user }}"
+    group: docker
+    append: true
+  become: true
+  when: __docker_version_check.rc != 0
+
+- name: Enable and start Docker service
+  ansible.builtin.systemd:
+    name: docker
+    state: started
+    enabled: true
+  become: true
+
+- name: Configure UFW to allow SSH and Docker
+  community.general.ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+  become: true
+
+- name: Enable UFW
+  community.general.ufw:
+    state: enabled
+  become: true

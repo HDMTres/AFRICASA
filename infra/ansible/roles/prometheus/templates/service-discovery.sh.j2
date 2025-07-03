@@ -1,0 +1,118 @@
+#!/bin/bash
+# Service Discovery Script for Prometheus
+# Automatically discovers running containers with metrics endpoints
+
+TARGETS_DIR="{{ prometheus_config_dir }}/targets"
+DOCKER_SOCKET="/var/run/docker.sock"
+
+# Create targets directory if it doesn't exist
+mkdir -p "$TARGETS_DIR"
+
+# Function to generate targets JSON for containers
+generate_container_targets() {
+    local output_file="$TARGETS_DIR/containers.json"
+    local temp_file="/tmp/prometheus_targets.json"
+    
+    echo '[' > "$temp_file"
+    
+    # Get running containers with labels
+    docker ps --format "table {% raw %}{{.ID}}\t{{.Names}}\t{{.Ports}}\t{{.Labels}}{% endraw %}" | tail -n +2 | while IFS=$'\t' read -r container_id container_name ports labels; do
+        # Check if container has prometheus.scrape=true label
+        if echo "$labels" | grep -q "prometheus.scrape=true"; then
+            # Extract prometheus labels
+            metrics_port=$(echo "$labels" | grep -o "prometheus.port=[^,]*" | cut -d'=' -f2)
+            metrics_path=$(echo "$labels" | grep -o "prometheus.path=[^,]*" | cut -d'=' -f2)
+            service_name=$(echo "$labels" | grep -o "prometheus.service=[^,]*" | cut -d'=' -f2)
+            environment=$(echo "$labels" | grep -o "prometheus.env=[^,]*" | cut -d'=' -f2)
+            
+            # Default values
+            metrics_port=${metrics_port:-"8080"}
+            metrics_path=${metrics_path:-"/metrics"}
+            service_name=${service_name:-"$container_name"}
+            environment=${environment:-"production"}
+            
+            # Get container IP
+            container_ip=$(docker inspect "$container_id" --format '{% raw %}{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}{% endraw %}')
+            
+            if [[ -n "$container_ip" ]]; then
+                cat >> "$temp_file" << EOF
+  {
+    "targets": ["$container_ip:$metrics_port"],
+    "labels": {
+      "__meta_container_name": "$container_name",
+      "__meta_container_id": "$container_id",
+      "__meta_service_name": "$service_name",
+      "__meta_environment": "$environment",
+      "__meta_metrics_path": "$metrics_path"
+    }
+  },
+EOF
+            fi
+        fi
+    done
+    
+    # Remove trailing comma and close JSON array
+    sed '$ s/,$//' "$temp_file" > "$temp_file.clean"
+    echo ']' >> "$temp_file.clean"
+    
+    # Move to final location
+    mv "$temp_file.clean" "$output_file"
+    rm -f "$temp_file"
+    
+    echo "Generated container targets: $output_file"
+}
+
+# Function to generate targets for Docker Compose services
+generate_compose_targets() {
+    local output_file="$TARGETS_DIR/compose_services.json"
+    
+    echo '[]' > "$output_file"
+    echo "Generated compose targets: $output_file"
+}
+
+# Function to generate static application targets
+generate_application_targets() {
+    local output_file="$TARGETS_DIR/applications.json"
+    
+    cat > "$output_file" << 'EOF'
+[
+{% if prometheus_static_targets is defined %}
+{% for target in prometheus_static_targets %}
+  {
+    "targets": ["{{ target.address }}:{{ target.port }}"],
+    "labels": {
+      "__meta_service_name": "{{ target.service_name }}",
+      "__meta_environment": "{{ target.environment | default('production') }}",
+      "__meta_metrics_path": "{{ target.metrics_path | default('/metrics') }}"
+    }
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+{% endif %}
+]
+EOF
+}
+
+# Main execution
+main() {
+    echo "Starting Prometheus service discovery..."
+    
+    # Check if Docker is available
+    if command -v docker &> /dev/null && [ -S "$DOCKER_SOCKET" ]; then
+        generate_container_targets
+        generate_compose_targets
+    else
+        echo "Docker not available, skipping container discovery"
+    fi
+    
+    generate_application_targets
+    
+    # Reload Prometheus configuration
+    if command -v systemctl &> /dev/null; then
+        systemctl reload prometheus 2>/dev/null || echo "Could not reload Prometheus"
+    fi
+    
+    echo "Service discovery completed"
+}
+
+# Run main function
+main "$@"

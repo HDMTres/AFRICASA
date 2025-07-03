@@ -1,0 +1,43 @@
+---
+# defaults file for ./roles/prometheus
+prometheus_version: "3.4.2"
+prometheus_bin_dir: "/usr/local/bin"
+prometheus_config_dir: "/etc/prometheus"
+prometheus_data_dir: "/var/lib/prometheus"
+prometheus_user: "prometheus"
+prometheus_group: "prometheus"
+prometheus_download_url: >-
+  https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version }}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+
+# Auto-discovery configuration
+prometheus_container_discovery_enabled: true
+prometheus_scrape_interval: "15s"
+prometheus_evaluation_interval: "15s"
+prometheus_retention_time: "15d"
+prometheus_cluster_name: "africasa-cluster"
+prometheus_region: "azure-west-europe"
+
+# Static targets for applications that don't support auto-discovery
+prometheus_static_targets:
+  - address: "{{ ansible_default_ipv4.address }}"
+    port: 3001
+    service_name: "africasa-backend"
+    environment: "production"
+    metrics_path: "/metrics"
+
+# Custom jobs configuration
+prometheus_custom_jobs:
+  - name: "africasa_applications"
+    file_sd_configs:
+      - files:
+        - "{{ prometheus_config_dir }}/targets/applications.json"
+        refresh_interval: "30s"
+    metrics_path: "/metrics"
+    scrape_interval: "30s"
+    relabel_configs:
+      - source_labels: ["__meta_service_name"]
+        target_label: "service"
+      - source_labels: ["__meta_environment"]
+        target_label: "environment"
+      - source_labels: ["__meta_metrics_path"]
+        target_label: "__metrics_path__"
