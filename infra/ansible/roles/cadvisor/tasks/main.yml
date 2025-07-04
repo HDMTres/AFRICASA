@@ -1,44 +1,93 @@
 ---
 # tasks file for ./roles/cadvisor
-- name: Create cAdvisor directory
+
+- name: Gather package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Check if cAdvisor is installed
+  ansible.builtin.stat:
+    path: "{{ cadvisor_bin_dir }}/cadvisor"
+  register: __cadvisor_installed
+
+- name: Get cAdvisor version if installed
+  ansible.builtin.command: "{{ cadvisor_bin_dir }}/cadvisor --version"
+  register: __cadvisor_installed_version
+  when: __cadvisor_installed.stat.exists
+  changed_when: false
+  failed_when: false
+
+- name: Create cAdvisor group
+  ansible.builtin.group:
+    name: "{{ cadvisor_group }}"
+    system: true
+  when: not __cadvisor_installed.stat.exists
+
+- name: Create cAdvisor user
+  ansible.builtin.user:
+    name: "{{ cadvisor_user }}"
+    group: "{{ cadvisor_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    home: "{{ cadvisor_data_dir }}"
+    create_home: false
+  when: not __cadvisor_installed.stat.exists
+
+- name: Create cAdvisor directories
   ansible.builtin.file:
-    path: "{{ cadvisor_directory }}"
+    path: "{{ item }}"
     state: directory
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ cadvisor_user }}"
+    group: "{{ cadvisor_group }}"
     mode: '0755'
-  become: true
+  loop:
+    - "{{ cadvisor_data_dir }}"
+    - "{{ cadvisor_config_dir }}"
+  when: not __cadvisor_installed.stat.exists
 
-- name: Run the cAdvisor container
-  community.docker.docker_container:
+- name: Download cAdvisor binary
+  ansible.builtin.get_url:
+    url: "{{ cadvisor_download_url }}"
+    dest: "{{ cadvisor_bin_dir }}/cadvisor"
+    mode: '0755'
+    owner: root
+    group: root
+  when: not __cadvisor_installed.stat.exists or (cadvisor_version not in __cadvisor_installed_version.stdout)
+  notify: restart cadvisor
+
+- name: Create cAdvisor systemd service
+  ansible.builtin.template:
+    src: cadvisor.service.j2
+    dest: /etc/systemd/system/cadvisor.service
+    mode: '0644'
+    owner: root
+    group: root
+  notify: 
+    - reload systemd
+    - restart cadvisor
+
+- name: meta flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Start and enable cAdvisor service
+  ansible.builtin.systemd:
     name: cadvisor
-    image: gcr.io/cadvisor/cadvisor:latest
     state: started
-    restart_policy: unless-stopped
-    ports:
-      - "8080:8080"
-    volumes:
-      - "/:/rootfs:ro"
-      - "/var/run:/var/run:ro"
-      - "/sys:/sys:ro"
-      - "/var/lib/docker/:/var/lib/docker:ro"
-      - "/dev/disk/:/dev/disk:ro"
-    privileged: true
-    devices:
-      - "/dev/kmsg:/dev/kmsg"
+    enabled: true
+    daemon_reload: true
 
-- name: Ensure cAdvisor container is running
-  community.docker.docker_container:
-    name: cadvisor
-    state: started
-    restart_policy: unless-stopped
-  become: true  
+- name: Check if UFW is installed
+  ansible.builtin.command: which ufw
+  register: ufw_check
+  changed_when: false
+  failed_when: false
 
-- name: Configure UFW for cAdvisor
+- name: Configure UFW for cAdvisor (if UFW is installed)
   community.general.ufw:
     rule: allow
-    port: 8080
+    port: "{{ cadvisor_port }}"
     proto: tcp
-  become: true
+  when: ufw_check.rc == 0
+  failed_when: false
 
 

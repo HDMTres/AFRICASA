@@ -5,8 +5,8 @@
   
   roles:
     - common
-    - prometheus
-    - node_exporter
+    # - prometheus
+    # - node_exporter
     - cadvisor
-    - grafana
+    # - grafana
   

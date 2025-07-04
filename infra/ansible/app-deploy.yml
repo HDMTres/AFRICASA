@@ -1,0 +1,7 @@
+- name: Deploy application 
+  hosts: 
+    - vm_app
+  remote_user: userafricasa
+  become: true
+  roles:
+    - app_deploy

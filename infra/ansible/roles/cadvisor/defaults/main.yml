@@ -1,3 +1,73 @@
 ---
 # defaults file for ./roles/cadvisor
+
+# Installation directories
 cadvisor_directory: "/opt/cadvisor"
+cadvisor_bin_dir: "/usr/local/bin"
+cadvisor_config_dir: "/etc/cadvisor"
+cadvisor_data_dir: "/var/lib/cadvisor"
+
+# User and group
+cadvisor_user: "cadvisor"
+cadvisor_group: "cadvisor"
+
+# Version and download
+cadvisor_version: "v0.47.2"
+cadvisor_download_url: "https://github.com/google/cadvisor/releases/download/{{ cadvisor_version }}/cadvisor-{{ cadvisor_version }}-linux-amd64"
+
+# Network configuration
+cadvisor_listen_ip: "0.0.0.0"
+cadvisor_port: "8080"
+cadvisor_prometheus_endpoint: "/metrics"
+
+# Docker configuration
+cadvisor_docker_only: true
+cadvisor_store_container_labels: true
+
+# Metrics configuration
+cadvisor_disable_metrics: []
+cadvisor_enable_metrics: 
+  - "cpu"
+  - "memory" 
+  - "network"
+  - "disk"
+  - "diskIO"
+  - "process"
+
+# Container labels to whitelist
+cadvisor_whitelisted_container_labels:
+  - "prometheus.scrape"
+  - "prometheus.port"
+  - "prometheus.path"
+  - "prometheus.service"
+  - "prometheus.env"
+
+# Environment metadata whitelist
+cadvisor_env_metadata_whitelist:
+  - "NODE_ENV"
+  - "ENVIRONMENT"
+  - "SERVICE_NAME"
+
+# Housekeeping intervals (in seconds)
+cadvisor_housekeeping_interval: "10s"
+cadvisor_max_housekeeping_interval: "60s"
+cadvisor_global_housekeeping_interval: "60s"
+
+# Logging configuration
+cadvisor_log_usage: false
+cadvisor_log_to_stderr: true
+cadvisor_log_level: "2"
+
+# Collection avancée pour conteneurs
+cadvisor_collect_machine_info: true
+cadvisor_collect_load_reader: true
+cadvisor_collect_detailed_memory: true
+
+# Rétention des données (en mémoire)
+cadvisor_storage_duration: "2m"
+cadvisor_storage_driver: "memory"
+
+# Inclusion des conteneurs système
+cadvisor_raw_cgroup_prefix_whitelist: 
+  - "/docker"
+  - "/system.slice/docker"

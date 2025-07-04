@@ -1,2 +1,25 @@
 ---
 # defaults file for roles/app_deploy
+ansible_user: "userafricasa"
+registry_name: ""
+registry_user: ""
+registry_password: ""
+
+# Apps variables
+frontend_app:
+  name: "frontend"
+  directory: "/opt/frontend"
+  port: 3000
+
+backend_app:
+  name: "backend"
+  directory: "/opt/backend"
+  port: 5000
+
+database_app:
+  name: "database"
+  directory: "/opt/database"
+  port: 5432
+
+
+

@@ -1,2 +1,27 @@
 ---
 # handlers file for ./roles/cadvisor
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+  listen: "reload systemd"
+
+- name: restart cadvisor
+  ansible.builtin.systemd:
+    name: cadvisor
+    state: restarted
+    daemon_reload: true
+  listen: "restart cadvisor"
+
+- name: start cadvisor
+  ansible.builtin.systemd:
+    name: cadvisor
+    state: started
+    enabled: true
+  listen: "start cadvisor"
+
+- name: stop cadvisor
+  ansible.builtin.systemd:
+    name: cadvisor
+    state: stopped
+  listen: "stop cadvisor"

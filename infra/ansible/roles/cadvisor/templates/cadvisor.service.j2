@@ -1,0 +1,73 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=cAdvisor - Analyzes resource usage and performance characteristics of running containers
+Documentation=https://github.com/google/cadvisor
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=simple
+User={{ cadvisor_user }}
+Group={{ cadvisor_group }}
+ExecStart={{ cadvisor_bin_dir }}/cadvisor \
+{% if cadvisor_disable_metrics | length > 0 %}
+    --disable_metrics={{ cadvisor_disable_metrics | join(',') }} \
+{% endif %}
+{% if cadvisor_enable_metrics | length > 0 %}
+    --enable_metrics={{ cadvisor_enable_metrics | join(',') }} \
+{% endif %}
+    --docker_only={{ cadvisor_docker_only | lower }} \
+{% if cadvisor_whitelisted_container_labels | length > 0 %}
+    --whitelisted_container_labels={{ cadvisor_whitelisted_container_labels | join(',') }} \
+{% endif %}
+{% if cadvisor_env_metadata_whitelist | length > 0 %}
+    --env_metadata_whitelist={{ cadvisor_env_metadata_whitelist | join(',') }} \
+{% endif %}
+    --store_container_labels={{ cadvisor_store_container_labels | lower }} \
+    --listen_ip={{ cadvisor_listen_ip }} \
+    --port={{ cadvisor_port }} \
+    --prometheus_endpoint={{ cadvisor_prometheus_endpoint }} \
+    --max_housekeeping_interval={{ cadvisor_max_housekeeping_interval }} \
+    --housekeeping_interval={{ cadvisor_housekeeping_interval }} \
+    --global_housekeeping_interval={{ cadvisor_global_housekeeping_interval }} \
+    --log_cadvisor_usage={{ cadvisor_log_usage | lower }} \
+    --logtostderr={{ cadvisor_log_to_stderr | lower }} \
+    --v={{ cadvisor_log_level }} \
+    --docker_root=/var/lib/docker \
+    --containerd=/run/containerd/containerd.sock \
+    --storage_duration={{ cadvisor_storage_duration | default('2m') }}
+
+SyslogIdentifier=cadvisor
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+StartLimitBurst=3
+
+# Security settings
+NoNewPrivileges=yes
+ProtectHome=yes
+ReadOnlyPaths=/
+ReadWritePaths=/var/lib/docker
+ReadWritePaths=/sys/fs/cgroup
+ReadWritePaths=/var/run/docker.sock
+
+{% if ansible_service_mgr is defined and ansible_service_mgr == "systemd" %}
+# Advanced systemd security (systemd >= 232)
+ProtectSystem=strict
+ProtectControlGroups=false
+ProtectKernelModules=true
+ProtectKernelTunables=yes
+PrivateTmp=yes
+{% else %}
+# Basic systemd security (systemd < 232)
+ProtectSystem=full
+{% endif %}
+
+# Resource limits for cAdvisor
+LimitNOFILE=1048576
+LimitMEMLOCK=infinity
+
+[Install]
+WantedBy=multi-user.target
