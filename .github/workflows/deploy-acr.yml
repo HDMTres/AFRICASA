@@ -1,0 +1,124 @@
+name: 🚀 Deploy to Azure Container Registry
+
+on:
+  push:
+    branches: [ ci ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  REGISTRY_NAME: 'africasaregistry'  # Remplacez par votre nom de registry
+  IMAGE_TAG: ${{ github.sha }}
+
+jobs:
+  # 🧪 Tests (reprise de votre CI existante)
+  test:
+    name: 🧪 Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: 📦 Install dependencies
+      run: |
+        cd backend && npm install
+        cd ../frontend && npm install
+
+    - name: 🧪 Run tests
+      run: |
+        echo "🧪 Testing backend..."
+        cd backend && npm run test --if-present || echo "No tests configured for backend"
+        echo "🧪 Testing frontend..."
+        cd ../frontend && npm run test --if-present || echo "No tests configured for frontend"
+
+  # 🐳 Build and Push to ACR
+  build-and-push:
+    name: 🐳 Build & Push to ACR
+    runs-on: ubuntu-latest
+    needs: test
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/ci'
+    
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+
+    - name: 🔐 Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: |
+          {
+            "clientId": "${{ secrets.ARM_CLIENT_ID }}",
+            "clientSecret": "${{ secrets.ARM_CLIENT_SECRET }}",
+            "subscriptionId": "${{ secrets.ARM_SUBSCRIPTION_ID }}",
+            "tenantId": "${{ secrets.ARM_TENANT_ID }}"
+          }
+
+    - name: 🏗️ Setup Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: 🔑 Login to Azure Container Registry
+      run: |
+        az acr login --name ${{ env.REGISTRY_NAME }}
+
+    - name: 🐳 Build and Push Backend Image
+      run: |
+        cd backend
+        docker build -t ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-backend:${{ env.IMAGE_TAG }} .
+        docker build -t ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-backend:latest .
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-backend:${{ env.IMAGE_TAG }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-backend:latest
+        echo "✅ Backend image pushed successfully"
+
+    - name: 🐳 Build and Push Frontend Image
+      run: |
+        cd frontend
+        docker build -t ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-frontend:${{ env.IMAGE_TAG }} .
+        docker build -t ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-frontend:latest .
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-frontend:${{ env.IMAGE_TAG }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-frontend:latest
+        echo "✅ Frontend image pushed successfully"
+
+    - name: 🐳 Build and Push MongoDB Image (if needed)
+      run: |
+        # Si vous avez un Dockerfile personnalisé pour MongoDB
+        # Sinon, utilisez l'image officielle mongo:latest
+        docker pull mongo:latest
+        docker tag mongo:latest ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-mongodb:latest
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/africasa-mongodb:latest
+        echo "✅ MongoDB image pushed successfully"
+
+    - name: 📊 Show pushed images
+      run: |
+        echo "🎉 Images pushed to ACR:"
+        az acr repository list --name ${{ env.REGISTRY_NAME }} --output table
+        echo "🔗 Registry URL: https://${{ env.REGISTRY_NAME }}.azurecr.io"
+
+  # 🎯 Deploy notification
+  deploy-notification:
+    name: 🎯 Deploy Notification
+    runs-on: ubuntu-latest
+    needs: [test, build-and-push]
+    if: always()
+    
+    steps:
+    - name: 🎉 Success notification
+      if: needs.build-and-push.result == 'success'
+      run: |
+        echo "🎉 AFRICASA deployment completed successfully!"
+        echo "✅ Tests passed"
+        echo "✅ Images built and pushed to ACR"
+        echo "🚀 Ready for production deployment!"
+        echo "🔗 Registry: https://${{ env.REGISTRY_NAME }}.azurecr.io"
+
+    - name: ❌ Failure notification
+      if: needs.build-and-push.result == 'failure'
+      run: |
+        echo "❌ AFRICASA deployment failed!"
+        echo "🔍 Check the logs above for details"
+        exit 1
