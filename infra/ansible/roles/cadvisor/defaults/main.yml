@@ -1,0 +1,3 @@
+---
+# defaults file for ./roles/cadvisor
+cadvisor_directory: "/opt/cadvisor"

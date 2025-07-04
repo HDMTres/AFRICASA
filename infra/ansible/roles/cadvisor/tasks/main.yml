@@ -1,0 +1,44 @@
+---
+# tasks file for ./roles/cadvisor
+- name: Create cAdvisor directory
+  ansible.builtin.file:
+    path: "{{ cadvisor_directory }}"
+    state: directory
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: '0755'
+  become: true
+
+- name: Run the cAdvisor container
+  community.docker.docker_container:
+    name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:latest
+    state: started
+    restart_policy: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - "/:/rootfs:ro"
+      - "/var/run:/var/run:ro"
+      - "/sys:/sys:ro"
+      - "/var/lib/docker/:/var/lib/docker:ro"
+      - "/dev/disk/:/dev/disk:ro"
+    privileged: true
+    devices:
+      - "/dev/kmsg:/dev/kmsg"
+
+- name: Ensure cAdvisor container is running
+  community.docker.docker_container:
+    name: cadvisor
+    state: started
+    restart_policy: unless-stopped
+  become: true  
+
+- name: Configure UFW for cAdvisor
+  community.general.ufw:
+    rule: allow
+    port: 8080
+    proto: tcp
+  become: true
+
+

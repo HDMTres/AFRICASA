@@ -1,0 +1,12 @@
+- name: Setup Monitoring Stack Grafana, Prometheus, Node Exporter, and cAdvisor
+  hosts: vm-app_4746
+  become: true
+  remote_user: userafricasa
+  
+  roles:
+    - common
+    - prometheus
+    - node_exporter
+    - cadvisor
+    - grafana
+  

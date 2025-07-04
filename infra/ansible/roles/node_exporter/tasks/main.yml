@@ -1,0 +1,79 @@
+---
+# tasks file for ./roles/node_exporter
+- name: Check if node_exporter is already installed
+  ansible.builtin.stat:
+    path: "{{ node_exporter_bin }}"
+  register: __node_exporter_installed
+
+- name: Get version if node exporter is installed
+  ansible.builtin.shell: |
+    cat /etc/systemd/system/node_exporter.service | grep Version | sed s/'.*Version '//g
+  register: __node_exporter_installed_version
+  when: __node_exporter_installed.stat.exists
+  changed_when: false
+
+- name: Create node_exporter group
+  ansible.builtin.group:
+    name: "{{ node_exporter_group }}"
+    system: true  
+  when: not __node_exporter_installed.stat.exists
+
+- name: Create node_exporter user
+  ansible.builtin.user:
+    name: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+  when: not __node_exporter_installed.stat.exists
+
+- name: Create node_exporter config directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    mode: '0755'
+  loop:
+    - "{{ node_exporter_config_dir }}"
+    - "{{ node_exporter_data_dir }}"
+  when: not __node_exporter_installed.stat.exists
+
+- name: Download and unzip node_exporter if not installed
+  ansible.builtin.unarchive:
+    src: "{{ node_exporter_dowload_url }}"
+    dest: "/tmp"
+    remote_src: true
+    validate_certs: true
+  when: not __node_exporter_installed.stat.exists or not __node_exporter_installed_version.stdout == node_exporter_version
+
+- name: Move node_exporter binary to the correct location
+  ansible.builtin.copy:
+    src: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64/node_exporter"
+    dest: "{{ node_exporter_bin }}"
+    owner: "{{ node_exporter_user }}"
+    group: "{{ node_exporter_group }}"
+    mode: '0755'
+    remote_src: true
+  when: not __node_exporter_installed.stat.exists or not __node_exporter_installed_version.stdout == node_exporter_version
+
+- name: Clean up temporary files
+  ansible.builtin.file:
+    path: "/tmp/node_exporter-{{ node_exporter_version }}.linux-amd64"
+    state: absent
+- name: Install the node_exporter systemd service
+  ansible.builtin.template:
+    src: "node_exporter.service.j2"
+    dest: "/etc/systemd/system/node_exporter.service"
+    owner: root
+    group: root
+    mode: '0750'
+  notify: Reload daemon and restart node_exporter
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Ensure node_exporter service is enabled and started
+  ansible.builtin.systemd:
+    name: node_exporter
+    state: started
+    enabled: true
