@@ -58,10 +58,8 @@ jobs:
           -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
           -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
           -Dsonar.sources=backend/,frontend/src/
-          -Dsonar.tests=backend/tests/,frontend/cypress/
-          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/dist/**,**/build/**,**/.next/**,**/uploads/**,**/logs/**,**/public/**
+          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/dist/**,**/build/**,**/.next/**,**/uploads/**,**/logs/**,**/public/**,**/tests/**
           -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
-          -Dsonar.testExecutionReportPaths=backend/coverage/test-report.xml,frontend/coverage/test-report.xml
 
     - name: ✅ SonarCloud Analysis Complete
       run: |
