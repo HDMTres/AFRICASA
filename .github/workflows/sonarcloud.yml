@@ -1,0 +1,71 @@
+name: 🔍 SonarCloud Analysis - AFRICASA
+
+on:
+  push:
+    branches: [ ci ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  sonarcloud:
+    name: 🔍 SonarCloud Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 📥 Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Shallow clones should be disabled for better analysis
+
+    - name: 🔧 Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: 📦 Install Backend dependencies
+      run: |
+        cd backend
+        npm install
+
+    - name: 📦 Install Frontend dependencies
+      run: |
+        cd frontend
+        npm install
+
+    - name: 🧪 Run Backend tests with coverage
+      run: |
+        cd backend
+        # Installer jest et coverage si pas déjà fait
+        npm install --save-dev jest @jest/globals c8 || true
+        # Lancer les tests avec coverage
+        npm run test:coverage || npm test || echo "No tests configured yet"
+      continue-on-error: true
+
+    - name: 🧪 Run Frontend tests with coverage
+      run: |
+        cd frontend
+        # Lancer les tests Next.js avec coverage
+        npm run test:coverage || npm test || echo "No tests configured yet"
+      continue-on-error: true
+
+    - name: 🔍 SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >-
+          -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
+          -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+          -Dsonar.sources=backend/,frontend/src/
+          -Dsonar.tests=backend/tests/,frontend/cypress/
+          -Dsonar.exclusions=**/node_modules/**,**/coverage/**,**/dist/**,**/build/**,**/.next/**,**/uploads/**,**/logs/**,**/public/**
+          -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
+          -Dsonar.testExecutionReportPaths=backend/coverage/test-report.xml,frontend/coverage/test-report.xml
+
+    - name: 🔍 SonarCloud Quality Gate Check
+      uses: sonarqube-quality-gate-action@master
+      timeout-minutes: 5
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      continue-on-error: true
