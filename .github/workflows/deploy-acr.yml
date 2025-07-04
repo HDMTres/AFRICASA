@@ -13,7 +13,7 @@ env:
 jobs:
   # 🧪 Tests (reprise de votre CI existante)
   test:
-    name: 🧪 Tests
+    name: 🧪 Testsss
     runs-on: ubuntu-latest
     
     steps:
