@@ -44,7 +44,7 @@ jobs:
         run: terraform plan -out=tfplan-network
         working-directory: terraform/network
     
-        # La partie vm-linux :
+        # La partie vm-linux  :
       - name: 📦 Terraform Init
         run: terraform init
         working-directory: terraform/vm-linux
