@@ -1,0 +1,66 @@
+# .github/workflows/deploy.yml
+
+name: "Terraform Deploy to Azure"
+
+on:
+  push:
+    branches:
+    #   - dev
+      - feature/terraform-ci
+  workflow_dispatch:
+
+jobs:
+  terraform:
+    name: "Terraform Apply"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repo
+        uses: actions/checkout@v3
+
+      - name: 🔧 Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.6.6 # ou ta version préférée
+
+      - name: 🔐 Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # La partie network :
+      - name: 📦 Terraform Init
+        run: terraform init
+        working-directory: terraform/network
+
+      - name: ✅ Terraform Validate
+        run: terraform validate
+        working-directory: terraform/network
+
+      - name: 📐 Terraform Format
+        run: terraform fmt -check
+        working-directory: terraform/network
+
+      - name: 📄 Terraform Plan
+        run: terraform plan -out=tfplan-network
+        working-directory: terraform/network
+    
+        # La partie vm-linux :
+      - name: 📦 Terraform Init
+        run: terraform init
+        working-directory: terraform/vm-linux
+
+      - name: ✅ Terraform Validate
+        run: terraform validate
+        working-directory: terraform/vm-linux
+
+      - name: 📐 Terraform Format
+        run: terraform fmt -check
+        working-directory: terraform/vm-linux
+
+      - name: 📄 Terraform Plan
+        run: terraform plan -out=tfplan-vmlinux
+        working-directory: terraform/vm-linux
+
+    #   - name: 🚀 Terraform Apply
+    #     if: github.ref == 'refs/heads/main'
+    #     run: terraform apply -auto-approve tfplan
