@@ -10,3 +10,15 @@ resource "azurerm_virtual_network" "hub" {
   location            = azurerm_resource_group.hub_rg.location
   resource_group_name = azurerm_resource_group.hub_rg.name
 }
+
+resource "azurerm_container_registry" "acr" {
+  name                = var.acr_name                   
+  resource_group_name = azurerm_resource_group.hub_rg.name
+  location            = azurerm_resource_group.hub_rg.location
+  sku                 = "Basic"                           # Possible : Basic, Standard, Premium
+  admin_enabled       = true                              # Permet login avec username/password
+
+  tags = {
+    environment = "staging"
+  }
+}
