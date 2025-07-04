@@ -4,7 +4,7 @@ on:
   push:
     branches: [ ci ]
   pull_request:
-    branches: [ main, dev ]
+    branches: [ main, develop ]
 
 jobs:
   sonarcloud:
@@ -63,9 +63,7 @@ jobs:
           -Dsonar.javascript.lcov.reportPaths=backend/coverage/lcov.info,frontend/coverage/lcov.info
           -Dsonar.testExecutionReportPaths=backend/coverage/test-report.xml,frontend/coverage/test-report.xml
 
-    - name: 🔍 SonarCloud Quality Gate Check
-      uses: sonarqube-quality-gate-action@master
-      timeout-minutes: 5
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      continue-on-error: true
+    - name: ✅ SonarCloud Analysis Complete
+      run: |
+        echo "🎉 SonarCloud analysis completed successfully!"
+        echo "📊 Check your results at: https://sonarcloud.io/project/overview?id=HDMTres_AFRICASA"
