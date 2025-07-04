@@ -91,6 +91,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 const userRoutes = require('./routes/userRoute');
 const propertyRoutes = require('./routes/propertyRoute');
 const mailsRoutes = require('./routes/mailRoute');
+const healthRoutes = require('./routes/healthRoute');
+
+// Health check routes (before API routes)
+app.use('/', healthRoutes);
 
 // API Routes avec préfixe /api
 app.use('/api/users', userRoutes);
