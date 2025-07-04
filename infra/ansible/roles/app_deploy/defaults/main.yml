@@ -1,9 +1,10 @@
 ---
 # defaults file for roles/app_deploy
 ansible_user: "userafricasa"
-registry_name: ""
-registry_user: ""
-registry_password: ""
+registry_acr_name: ""
+registry_acr_user: ""
+registry_acr_serveur: ""
+registry_acr_password: "{{ vault_}}"
 
 # Apps variables
 frontend_app:

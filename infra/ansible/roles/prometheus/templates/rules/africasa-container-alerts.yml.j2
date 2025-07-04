@@ -1,0 +1,116 @@
+# {{ ansible_managed }}
+# AFRICASA Container Alert Rules
+
+groups:
+  - name: africasa.containers
+    rules:
+      # Container availability alerts
+      - alert: ContainerDown
+        expr: absent(container_last_seen{name!=""})
+        for: 1m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Container {% raw %}{{ $labels.name }}{% endraw %} is down"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} has been down for more than 1 minute."
+
+      # Container CPU alerts
+      - alert: ContainerHighCPU
+        expr: sum(rate(container_cpu_usage_seconds_total{name!=""}[5m])) by (name) * 100 > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High CPU usage in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} CPU usage is above 80% for more than 5 minutes."
+
+      - alert: ContainerCriticalCPU
+        expr: sum(rate(container_cpu_usage_seconds_total{name!=""}[5m])) by (name) * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical CPU usage in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} CPU usage is above 95% for more than 2 minutes."
+
+      # Container memory alerts
+      - alert: ContainerHighMemory
+        expr: container_memory_usage_bytes{name!=""} / container_spec_memory_limit_bytes{name!=""} * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High memory usage in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} memory usage is above 85% of limit for more than 5 minutes."
+
+      - alert: ContainerCriticalMemory
+        expr: container_memory_usage_bytes{name!=""} / container_spec_memory_limit_bytes{name!=""} * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical memory usage in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} memory usage is above 95% of limit for more than 2 minutes."
+
+      # Container restart alerts
+      - alert: ContainerFrequentRestarts
+        expr: increase(container_spec_cpu_shares{name!=""}[1h]) > 5
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "Container {% raw %}{{ $labels.name }}{% endraw %} restarting frequently"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} has restarted more than 5 times in the last hour."
+
+      # Container filesystem alerts
+      - alert: ContainerHighDiskUsage
+        expr: container_fs_usage_bytes{name!=""} / container_fs_limit_bytes{name!=""} * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High disk usage in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} disk usage is above 85% for more than 5 minutes."
+
+      # Application specific alerts for AFRICASA
+      - alert: AfricasaBackendDown
+        expr: absent(container_last_seen{name=~".*backend.*|.*africasa-backend.*"})
+        for: 30s
+        labels:
+          severity: critical
+          team: backend
+          service: africasa-backend
+        annotations:
+          summary: "AFRICASA Backend service is down"
+          description: "The AFRICASA backend container is not running."
+          runbook_url: "https://wiki.africasa.com/runbooks/backend-down"
+
+      - alert: AfricasaFrontendDown
+        expr: absent(container_last_seen{name=~".*frontend.*|.*africasa-frontend.*"})
+        for: 30s
+        labels:
+          severity: critical
+          team: frontend
+          service: africasa-frontend
+        annotations:
+          summary: "AFRICASA Frontend service is down"
+          description: "The AFRICASA frontend container is not running."
+          runbook_url: "https://wiki.africasa.com/runbooks/frontend-down"
+
+      # Network performance alerts
+      - alert: ContainerHighNetworkIO
+        expr: sum(rate(container_network_receive_bytes_total{name!=""}[5m])) by (name) > 100 * 1024 * 1024
+        for: 10m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High network I/O in container {% raw %}{{ $labels.name }}{% endraw %}"
+          description: "Container {% raw %}{{ $labels.name }}{% endraw %} network receive rate is above 100MB/s for more than 10 minutes."

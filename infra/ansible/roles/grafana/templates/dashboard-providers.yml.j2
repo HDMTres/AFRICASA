@@ -1,0 +1,22 @@
+# {{ ansible_managed }}
+# Grafana Dashboard Providers Configuration
+
+apiVersion: 1
+
+providers:
+{% for provider in grafana_dashboard_providers %}
+  - name: "{{ provider.name }}"
+    orgId: {{ provider.orgId | default(1) }}
+{%- if provider.folder is defined %}
+    folder: "{{ provider.folder }}"
+{%- endif %}
+    type: {{ provider.type }}
+    disableDeletion: {{ provider.disableDeletion | default(false) | lower }}
+    updateIntervalSeconds: {{ provider.updateIntervalSeconds | default(10) }}
+    allowUiUpdates: {{ provider.allowUiUpdates | default(true) | lower }}
+    options:
+      path: {{ provider.options.path }}
+{%- if provider.options.foldersFromFilesStructure is defined %}
+      foldersFromFilesStructure: {{ provider.options.foldersFromFilesStructure | lower }}
+{%- endif %}
+{% endfor %}

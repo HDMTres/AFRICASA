@@ -1,0 +1,102 @@
+# {{ ansible_managed }}
+# AFRICASA Infrastructure Alert Rules
+
+groups:
+  - name: africasa.infrastructure
+    rules:
+      # Service availability alerts
+      - alert: ServiceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Service {% raw %}{{ $labels.instance }}{% endraw %} is down"
+          description: "{% raw %}{{ $labels.instance }}{% endraw %} has been down for more than 1 minute."
+          runbook_url: "https://wiki.africasa.com/runbooks/service-down"
+
+      # CPU usage alerts
+      - alert: HighCPUUsage
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High CPU usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "CPU usage is above 80% for more than 5 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      - alert: CriticalCPUUsage
+        expr: 100 - (avg(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical CPU usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "CPU usage is above 95% for more than 2 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      # Memory usage alerts
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High memory usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Memory usage is above 85% for more than 5 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      - alert: CriticalMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical memory usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Memory usage is above 95% for more than 2 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      # Disk usage alerts
+      - alert: HighDiskUsage
+        expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100) > 85
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High disk usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Disk usage is above 85% for more than 5 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      - alert: CriticalDiskUsage
+        expr: 100 - ((node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100) > 95
+        for: 2m
+        labels:
+          severity: critical
+          team: sre
+        annotations:
+          summary: "Critical disk usage on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Disk usage is above 95% for more than 2 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      # Load average alerts
+      - alert: HighLoadAverage
+        expr: node_load1 > 2
+        for: 5m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High load average on {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Load average is above 2 for more than 5 minutes on {% raw %}{{ $labels.instance }}{% endraw %}."
+
+      # Network connectivity alerts
+      - alert: HighNetworkLatency
+        expr: probe_duration_seconds > 1
+        for: 2m
+        labels:
+          severity: warning
+          team: sre
+        annotations:
+          summary: "High network latency to {% raw %}{{ $labels.instance }}{% endraw %}"
+          description: "Network latency is above 1 second for more than 2 minutes."

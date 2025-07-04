@@ -68,11 +68,55 @@
     port: "{{ grafana_port }}"
     proto: tcp
   become: true
+  when: not __grafana_installed.stat.exists
 
 
 - name: Wait for Grafana to start
   ansible.builtin.wait_for:
-    port: "{{ grafana_port }}"
+    port: "{{ grafana_server.http_port }}"
     delay: 10
     timeout: 60
   when: not __grafana_installed.stat.exists
+
+- name: Create Grafana directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: grafana
+    group: grafana
+    mode: '0755'
+  loop:
+    - "{{ grafana_dashboards_dir }}"
+    - "/etc/grafana/provisioning/dashboards"
+    - "/etc/grafana/provisioning/datasources"
+    - "/etc/grafana/provisioning/notifiers"
+
+- name: Configure Grafana datasources
+  ansible.builtin.template:
+    src: datasources.yml.j2
+    dest: /etc/grafana/provisioning/datasources/datasources.yml
+    owner: grafana
+    group: grafana
+    mode: '0644'
+  notify: Restart grafana
+
+- name: Configure Grafana dashboard providers
+  ansible.builtin.template:
+    src: dashboard-providers.yml.j2
+    dest: /etc/grafana/provisioning/dashboards/providers.yml
+    owner: grafana
+    group: grafana
+    mode: '0644'
+  notify: Restart grafana
+
+- name: Install custom dashboards
+  ansible.builtin.template:
+    src: "dashboards/{{ item }}.j2"
+    dest: "{{ grafana_dashboards_dir }}/{{ item }}"
+    owner: grafana
+    group: grafana
+    mode: '0644'
+  loop:
+    - africasa-infrastructure-overview.json
+    - africasa-containers.json
+  notify: Restart grafana

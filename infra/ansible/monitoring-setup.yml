@@ -1,12 +1,104 @@
-- name: Setup Monitoring Stack Grafana, Prometheus, Node Exporter, and cAdvisor
+---
+# AFRICASA Monitoring Stack Deployment
+# Optimized for SRE best practices
+
+- name: Deploy AFRICASA Monitoring Infrastructure
   hosts: vm-app_4746
   become: true
   remote_user: userafricasa
+  gather_facts: true
   
+  vars:
+    ansible_python_interpreter: auto_silent
+    ansible_host_key_checking: false
+    
+    # Environment specific variables
+    environment_name: "production"
+    monitoring_namespace: "africasa-monitoring"
+    
+    # Custom alert email
+    grafana_alert_email: "sre@africasa.com"
+    
+  pre_tasks:
+    - name: Update package cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Install common monitoring dependencies
+      ansible.builtin.package:
+        name:
+          - curl
+          - wget
+          - jq
+          - htop
+          - net-tools
+        state: present
+
   roles:
-    - common
-    # - prometheus
-    # - node_exporter
-    - cadvisor
-    # - grafana
-  
+    - role: common
+      tags: ['common', 'base']
+      
+    - role: prometheus
+      tags: ['prometheus', 'monitoring', 'metrics']
+      
+    - role: node_exporter
+      tags: ['node_exporter', 'monitoring', 'metrics']
+      
+    - role: cadvisor
+      tags: ['cadvisor', 'monitoring', 'containers']
+      
+    - role: grafana
+      tags: ['grafana', 'monitoring', 'dashboards']
+
+  post_tasks:
+    - name: Verify monitoring stack health
+      ansible.builtin.uri:
+        url: "{{ item.url }}"
+        method: GET
+        status_code: 200
+        timeout: 30
+      loop:
+        - { name: "Prometheus", url: "http://localhost:9090/-/healthy" }
+        - { name: "Grafana", url: "http://localhost:3000/" }
+        - { name: "Node Exporter", url: "http://localhost:9100/metrics" }
+        - { name: "cAdvisor", url: "http://localhost:8080/metrics" }
+      register: health_checks
+      
+    - name: Display monitoring stack status
+      ansible.builtin.debug:
+        msg: |
+          AFRICASA Monitoring Stack Deployment Summary:
+          ==============================================
+          ✅ Prometheus: http://{{ ansible_default_ipv4.address }}:9090
+          ✅ Grafana: http://{{ ansible_default_ipv4.address }}:3000
+             Username: admin
+             Password: {{ vault_grafana_admin_password }}
+          ✅ Node Exporter: http://{{ ansible_default_ipv4.address }}:9100
+          ✅ cAdvisor: http://{{ ansible_default_ipv4.address }}:8080
+          
+          🎯 Custom Dashboards Available:
+          - AFRICASA Infrastructure Overview
+          - AFRICASA Container Metrics
+          
+          🚨 Alert Rules Configured:
+          - Infrastructure alerts (CPU, Memory, Disk, Network)
+          - Container alerts (Performance, Availability)
+          - AFRICASA application specific alerts
+          
+          📊 Next Steps:
+          1. Access Grafana and verify dashboards
+          2. Test alert rules with threshold breaches
+          3. Configure additional notification channels
+          4. Set up log aggregation (ELK/Loki)
+
+  handlers:
+    - name: Restart monitoring services
+      ansible.builtin.systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - prometheus
+        - grafana-server
+        - node_exporter
+        - cadvisor

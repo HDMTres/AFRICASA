@@ -1,24 +1,122 @@
 ---
 # defaults file for ./roles/grafana
+
+# Grafana installation
 grafana_version: "latest"
-grafana_admin_user: "admin"
-grafana_admin_password: "{{ vault_grafana_admin_password }}"
-grafana_port: 3000
-grafana_data_dir: "/var/lib/grafana"
-grafana_config_dir: "/etc/grafana"
-grafana_log_dir: "/var/log/grafana"
-grafana_plugins_dir: "/var/lib/grafana/plugins"
-grafana_user: "grafana"
-grafana_group: "grafana"
+grafana_use_repository: true
+grafana_apt_repo_url: "https://packages.grafana.com/oss/deb"
+grafana_apt_repo_gpgkey: "https://packages.grafana.com/gpg.key"
 
+# Grafana security configuration
 grafana_security:
-  admin_user: "{{ grafana_admin_user }}"
-  admin_password: "{{ grafana_admin_password }}"
+  admin_user: admin
+  admin_password: "{{ vault_grafana_admin_password }}"
+  secret_key: "{{ vault_grafana_secret_key | default('SW2YcwTIb9zpOOhoPsMm') }}"
+  cookie_secure: false
+  cookie_samesite: "lax"
 
+# Grafana server configuration
+grafana_server:
+  domain: "{{ ansible_default_ipv4.address }}"
+  http_addr: "0.0.0.0"
+  http_port: 3000
+  root_url: "http://{{ ansible_default_ipv4.address }}:3000/"
+  enable_gzip: true
+
+# Grafana database configuration
+grafana_database:
+  type: sqlite3
+  path: grafana.db
+
+# Grafana users configuration
+grafana_users:
+  allow_sign_up: false
+  allow_org_create: false
+  auto_assign_org: true
+  auto_assign_org_role: Viewer
+
+# Grafana auth configuration
+grafana_auth:
+  disable_login_form: false
+  disable_signout_menu: false
+
+# Grafana logging
+grafana_log:
+  mode: file
+  level: info
+
+# Grafana alerting
+grafana_alerting:
+  enabled: true
+  execute_alerts: true
+  error_or_timeout: "alerting"
+  nodata_or_nullvalues: "no_data"
+  concurrent_render_limit: 5
+
+# Grafana unified alerting (v8+)
+grafana_unified_alerting:
+  enabled: true
+  admin_config_poll_interval: "60s"
+  alertmanager_poll_interval: "60s"
+  max_attempts: 3
+
+# Data sources configuration
 grafana_datasources:
   - name: "Prometheus"
     type: "prometheus"
-    url: "http://localhost:9090"
     access: "proxy"
-    is_default: true
+    url: "http://localhost:9090"
+    basicAuth: false
+    isDefault: true
+    jsonData:
+      httpMethod: GET
+      prometheusType: Prometheus
+      prometheusVersion: "2.40.0"
+      cacheLevel: "High"
+      disableMetricsLookup: false
+      customQueryParameters: ""
+      timeout: 60
+    secureJsonData: {}
+
+# Grafana plugins
+grafana_plugins:
+  - grafana-piechart-panel
+  - grafana-worldmap-panel
+  - grafana-clock-panel
+  - natel-discrete-panel
+  - vonage-status-panel
+
+# Custom dashboards configuration
+grafana_dashboards_dir: "/var/lib/grafana/dashboards"
+
+# Dashboard providers configuration
+grafana_dashboard_providers:
+  - name: "AFRICASA Dashboards"
+    orgId: 1
+    folder: "AFRICASA"
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    allowUiUpdates: true
+    options:
+      path: "{{ grafana_dashboards_dir }}"
+      foldersFromFilesStructure: false
+
+# Notification channels (for alerting)
+grafana_notification_channels:
+  - name: "slack-alerts"
+    type: "slack"
+    settings:
+      url: "{{ vault_slack_webhook_url | default('') }}"
+      channel: "#alerts"
+      username: "Grafana"
+      iconEmoji: ":exclamation:"
+      title: "AFRICASA Alert"
+      text: "{{ '{{ range .Alerts }}{{ .Annotations.summary }}{{ end }}' }}"
+
+  - name: "email-alerts"
+    type: "email"
+    settings:
+      addresses: "{{ grafana_alert_email | default('admin@africasa.com') }}"
+      subject: "AFRICASA Infrastructure Alert"
 

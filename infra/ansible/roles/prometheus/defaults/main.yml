@@ -41,3 +41,49 @@ prometheus_custom_jobs:
         target_label: "environment"
       - source_labels: ["__meta_metrics_path"]
         target_label: "__metrics_path__"
+
+# Collection avancée pour conteneurs
+cadvisor_collect_machine_info: true
+cadvisor_collect_load_reader: true
+cadvisor_collect_detailed_memory: true
+
+# Rétention des données (en mémoire)
+cadvisor_storage_duration: "2m"
+cadvisor_storage_driver: "memory"
+
+# Inclusion des conteneurs système
+cadvisor_raw_cgroup_prefix_whitelist: 
+  - "/docker"
+  - "/system.slice/docker"
+
+# Alerting configuration for Prometheus
+prometheus_alert_rules_dir: "{{ prometheus_config_dir }}/rules"
+
+# Alert rules files
+prometheus_alert_rules:
+  - africasa-infrastructure-alerts.yml
+  - africasa-container-alerts.yml
+
+# Alertmanager configuration
+prometheus_alertmanager_config:
+  global:
+    smtp_smarthost: 'localhost:587'
+    smtp_from: 'alerts@africasa.com'
+  
+  route:
+    group_by: ['alertname']
+    group_wait: 10s
+    group_interval: 10s
+    repeat_interval: 1h
+    receiver: 'web.hook'
+  
+  receivers:
+    - name: 'web.hook'
+      email_configs:
+        - to: 'admin@africasa.com'
+          subject: 'AFRICASA Alert: {{ "{{ .GroupLabels.alertname }}" }}'
+          body: |
+            {{ "{{ range .Alerts }}" }}
+            Alert: {{ "{{ .Annotations.summary }}" }}
+            Description: {{ "{{ .Annotations.description }}" }}
+            {{ "{{ end }}" }}

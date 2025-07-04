@@ -56,6 +56,16 @@
     remote_src: true
   when: not __prometheus_installed.stat.exists or not __prometheus_installed_version.stdout == prometheus_version
 
+- name: Move promtool binary to the correct location
+  ansible.builtin.copy:
+    src: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64/promtool"
+    dest: "{{ prometheus_bin_dir }}/promtool"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: '0755'
+    remote_src: true
+  when: not __prometheus_installed.stat.exists or not __prometheus_installed_version.stdout == prometheus_version
+
 - name: Clean up temporary files
   ansible.builtin.file:
     path: "/tmp/prometheus-{{ prometheus_version }}.linux-amd64"
@@ -127,6 +137,37 @@
 - name: Run initial service discovery
   ansible.builtin.command: "/usr/local/bin/prometheus-discovery.sh"
   changed_when: false
+
+- name: Create Prometheus alert rules
+  ansible.builtin.template:
+    src: "rules/{{ item }}.j2"
+    dest: "{{ prometheus_config_dir }}/rules/{{ item }}"
+    owner: "{{ prometheus_user }}"
+    group: "{{ prometheus_group }}"
+    mode: '0644'
+  loop: "{{ prometheus_alert_rules }}"
+  notify: Reload daemon and restart prometheus
+
+- name: Validate Prometheus configuration
+  ansible.builtin.command: "{{ prometheus_bin_dir }}/promtool check config {{ prometheus_config_dir }}/prometheus.yml"
+  changed_when: false
+  register: prometheus_config_check
+
+- name: Validate Prometheus alert rules
+  ansible.builtin.command: "{{ prometheus_bin_dir }}/promtool check rules {{ prometheus_config_dir }}/rules/{{ item }}"
+  changed_when: false
+  loop: "{{ prometheus_alert_rules }}"
+  register: prometheus_rules_check
+
+- name: Display configuration validation result
+  ansible.builtin.debug:
+    msg: "Prometheus configuration is valid"
+  when: prometheus_config_check.rc == 0
+
+- name: Display rules validation result
+  ansible.builtin.debug:
+    msg: "Prometheus alert rules are valid"
+  when: prometheus_rules_check.results | selectattr('rc', 'equalto', 0) | list | length == prometheus_alert_rules | length
 
 - name: Configure UFW for prometheus
   community.general.ufw:

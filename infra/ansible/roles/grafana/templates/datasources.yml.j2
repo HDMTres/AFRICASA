@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+# Grafana Datasources Configuration
+
+apiVersion: 1
+
+datasources:
+{% for datasource in grafana_datasources %}
+  - name: {{ datasource.name }}
+    type: {{ datasource.type }}
+    access: {{ datasource.access }}
+    url: {{ datasource.url }}
+    isDefault: {{ datasource.isDefault | default(false) | lower }}
+    basicAuth: {{ datasource.basicAuth | default(false) | lower }}
+{% if datasource.jsonData is defined %}
+    jsonData:
+{% for key, value in datasource.jsonData.items() %}
+      {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+{% if datasource.secureJsonData is defined %}
+    secureJsonData:
+{% for key, value in datasource.secureJsonData.items() %}
+      {{ key }}: {{ value }}
+{% endfor %}
+{% endif %}
+    editable: true
+{% endfor %}
